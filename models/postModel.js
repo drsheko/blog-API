@@ -7,6 +7,7 @@ const postSchema = new Schema({
     text:{type:String, minLength:1 , required:true},
     comments:{type:Schema.Types.ObjectId ,ref : 'comment'},
     isPublished:{type:Boolean,default:true},
+    picture:{type:String},
     timestamp:{type:Date, default:new Date()}
 });
 

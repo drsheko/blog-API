@@ -5,29 +5,61 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose =require('mongoose');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var flash =require('connect-flash')
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var User = require('./models/userModel')
+var Routers =require('./routes/routers')
+var bcrypt = require('bcryptjs');
 
 
 // mongoDatabase setup
 mongoDB = "mongodb+srv://shady:"+process.env.MONGO_PASSCODE+"@blog.ddhqail.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(mongoDB,{useUnifiedTopology: true, useNewUrlParser: true });
-const db = mongoose.connection();
+const db = mongoose.connection;
 db.on("error", console.error.bind(console,'Mongo Connection Error'));
 
 
 var app = express();
 
-
-
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// passport setup
+passport.use(
+  new LocalStrategy({passReqToCallback:true},(req,username, password, done) => {
+    User.findOne({ username: username }, (err, user) => {
+      if (err) { 
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, req.flash('error',"user is not found "));
+      }
+     
+      bcrypt.compare(password, user.password,(err, res) => {
+        if(err){return done(console.log(err))}
+        if (!res) {
+            return done(null, false,req.flash('error','Incorrect password'))
+        } 
+        else{
+          return done(null, user);
+        }
+      })
+    });
+  })
+);
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
 
 
 app.use(flash())
@@ -37,8 +69,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+// Routes setup
+app.use('/', Routers);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
