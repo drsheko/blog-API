@@ -36,6 +36,21 @@ exports.createPost_post = [
 
 ]
 
+exports.Post_edit_post = async(req,res)=>{
+    var id = req.params.id ; 
+    Post.findByIdAndUpdate(id ,{
+            $set:{
+                title:req.body.title,
+                text:req.body.text
+            }
+        },
+        (err=>{
+        if(err){return res.status(401).json({
+            'errors':"Can't update the post"
+        })}
+        else {return res.json({'success':'Post has been updated'})}
+    }))
+}
 exports.deletePost = async(req,res)=>{
     var id = req.params.id ; 
     Post.findByIdAndDelete(id , (err=>{
@@ -44,4 +59,9 @@ exports.deletePost = async(req,res)=>{
         })}
         else {return res.json({'success':'Post has been deleted'})}
     }))
+}
+
+exports.get_all_posts = async(req,res)=>{
+    var allPosts = await Post.find().sort([['timestamp','descending']]).populate('user');
+    res.json({'posts':allPosts})
 }

@@ -22,5 +22,10 @@ router.post('/api/post',postController.createPost_post)
 // delete Post 
 router.delete('/api/remove-post/:id' , postController.deletePost)
 
+// Get all Posts 
+router.get('/api/posts' , postController.get_all_posts)
+
+// Update Post 
+router.put('/api/posts/post/:id' , postController.Post_edit_post)
 
   module.exports =  router;
