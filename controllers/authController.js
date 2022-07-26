@@ -24,9 +24,9 @@ function(req, res, next) {
 exports.log_out =  (req, res) => {
     req.logout(function (err) {
       if (err) {
-        return next(err);
+        return res.json({"errors":err})
       }
       var msg = 'Log out successfully'
-      res.json(msg);
+      res.json({'success':msg});
     });
   }       
