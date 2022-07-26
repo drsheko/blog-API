@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose =require('mongoose');
 var flash =require('connect-flash')
+var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('./models/userModel')
@@ -28,19 +29,19 @@ app.set('view engine', 'ejs');
 
 // passport setup
 passport.use(
-  new LocalStrategy({passReqToCallback:true},(req,username, password, done) => {
+  new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
       if (err) { 
         return done(err);
       }
       if (!user) {
-        return done(null, false, req.flash('error',"user is not found "));
+        return done(null, false, {'error':"user is not found "});
       }
      
       bcrypt.compare(password, user.password,(err, res) => {
         if(err){return done(console.log(err))}
         if (!res) {
-            return done(null, false,req.flash('error','Incorrect password'))
+            return done(null, false,{'error':'incorrect password'})
         } 
         else{
           return done(null, user);
@@ -60,9 +61,9 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
-
-app.use(flash())
+app.use(session({ secret: 'cats', resave: false, saveUninitialized: true}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

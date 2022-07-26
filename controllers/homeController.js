@@ -1,6 +1,5 @@
 const mongoose =require('mongoose');
 const Post = require('../models/postModel')
-const flash = require('connect-flash')
 const passport =require('passport');
 exports.home_get = async(req,res)=>{
     const posts = await Post.find().sort([['timestamp','descending']]).populate(['user','comment'])
