@@ -35,3 +35,13 @@ exports.createPost_post = [
     }
 
 ]
+
+exports.deletePost = async(req,res)=>{
+    var id = req.params.id ; 
+    Post.findByIdAndDelete(id , (err=>{
+        if(err){return res.status(401).json({
+            'errors':"Can't delete the post"
+        })}
+        else {return res.json({'success':'Post has been deleted'})}
+    }))
+}

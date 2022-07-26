@@ -19,7 +19,8 @@ router.get('/api/logout',authController.log_out)
 
 // create Posts 
 router.post('/api/post',postController.createPost_post)
-
+// delete Post 
+router.delete('/api/remove-post/:id' , postController.deletePost)
 
 
   module.exports =  router;
