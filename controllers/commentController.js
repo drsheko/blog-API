@@ -46,6 +46,17 @@ exports.edit_comment = async(req,res)=>{
     )
 }
 
+exports.delete_comment = async(req,res)=>{
+    var id = req.params.commentid
+    Comment.findByIdAndDelete(id,
+        (err)=>{
+            if(err){ return res.status(401).json({'errors':err})}
+            else{ return res.json({'success':'Comment has been deleted'})}
+        }
+        
+    )
+}
+
 
 exports.get_allCommentsOfPost = async(req,res)=>{
     var postId = req.params.postid
