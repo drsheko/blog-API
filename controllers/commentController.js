@@ -17,6 +17,7 @@ exports.create_comment_post = [
            user: userId,
            text:req.body.text ,
            post:postId,
+           timestamp: new Date()
         }).save(async(err,savedComment)=>{
             if(err){return res.status(401).json({'errors':err})}
             var thisPost = await Post.findByIdAndUpdate(postId,{
@@ -24,7 +25,41 @@ exports.create_comment_post = [
                     comments :savedComment._id
                 }
             })
-            return res.json({'success':'Comment has benn created'})
+            return res.json({'success':'Comment has benn created','data':savedComment})
         })
     }
 ]
+
+exports.edit_comment = async(req,res)=>{
+    var id = req.params.commentid;
+    Comment.findByIdAndUpdate(id,{
+        $set:{
+            text:req.body.text
+            }
+        },
+        (err,result)=>{
+            if(err){ return res.status(401).json({'errors':err});
+            }else{
+                return res.json({'success':'comment has been edited','data':result})
+            }  
+        }
+    )
+}
+
+
+exports.get_allCommentsOfPost = async(req,res)=>{
+    var postId = req.params.postid
+    
+    Post.findById(postId,{'comments':1})
+        .populate({
+            path:'comments',
+            // sorting based on property of populated field(path)
+            options:{sort:{'timestamp':-1}}
+        })
+        .exec((err,result)=>{
+            if(err){ return res.status(401).json({'errors':err})
+            }else{
+                return res.json({'success':'success','data':result})
+            }
+        })
+}
