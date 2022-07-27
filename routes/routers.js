@@ -37,7 +37,11 @@ router.get('/api/user/posts' , postController.get_user_posts)
 // Create comment
 router.post('/api/posts/:postid/comments' , commentController.create_comment_post)
 
+//Edit commetn
+router.put('/api/posts/post/comments/:commentid',commentController.edit_comment)
 
 
+// get Post's Comments
+router.get('/api/posts/:postid/comments' ,commentController.get_allCommentsOfPost)
 
 module.exports =  router;
