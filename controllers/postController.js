@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Post =require('../models/postModel');
+const Comment = require('../models/commentModel')
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const {body , validationResult} = require('express-validator');
@@ -67,7 +68,7 @@ exports.deletePost = async(req,res)=>{
 }
 
 exports.get_all_posts = async(req,res)=>{
-    var allPosts = await Post.find().sort([['timestamp','descending']]).populate('user');
+    var allPosts = await Post.find().sort([['timestamp','descending']]).populate('user').populate('comments');
     res.json({'posts':allPosts})
 }
 

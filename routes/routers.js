@@ -3,7 +3,7 @@ const router = require('express').Router();
 const userController = require('../controllers/userController')
 const authController = require('../controllers/authController')
 const postController = require('../controllers/postController')
-
+const commentController =require('../controllers/commentController')
 
 router.get('/', function(req, res, next) {
     res.render('home');
@@ -32,4 +32,12 @@ router.put('/api/posts/post/:id' , postController.Post_edit_post)
 
 //get Posts for certain user
 router.get('/api/user/posts' , postController.get_user_posts)
-  module.exports =  router;
+  
+
+// Create comment
+router.post('/api/posts/:postid/comments' , commentController.create_comment_post)
+
+
+
+
+module.exports =  router;
