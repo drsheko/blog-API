@@ -35,7 +35,12 @@ exports.createPost_post = [
     }
 
 ]
-
+exports.Post_edit_get = async(req,res)=>{
+    var id = req.params.id;
+     var postToUpdate = await Post.findById(id )
+     
+     return res.json({'postToEdit':postToUpdate})
+}
 exports.Post_edit_post = async(req,res)=>{
     var id = req.params.id ; 
     Post.findByIdAndUpdate(id ,{
@@ -64,4 +69,20 @@ exports.deletePost = async(req,res)=>{
 exports.get_all_posts = async(req,res)=>{
     var allPosts = await Post.find().sort([['timestamp','descending']]).populate('user');
     res.json({'posts':allPosts})
+}
+
+exports.get_user_posts = async(req,res)=>{
+    var userId = req.user._id;
+    var userPosts = await Post.find({}).sort([['timestamp','descending']])
+    .populate({
+        "path": "user",
+        "match": { "_id": userId }
+    }).exec((err,posts)=>{
+        if(err){return res.status(401).json({'errors':err})}
+        posts =  posts.filter(function(post){
+            return post.user !==null
+        })
+        return  res.json({'posts':posts})
+    });
+    
 }
