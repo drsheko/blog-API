@@ -2,15 +2,11 @@ const passport = require('passport');
 const mongoose = require('mongoose')
 
 exports.login_post = 
-
-
-
-
-function(req, res, next) {
-
-    passport.authenticate('local', function(err, user, info) {
-      if (err) { return  res.status(401).json({'errors':err}); }
-      if (!user) { return res.status(401).json({'errors':'Username not found'}); }
+    function(req, res, next) {
+        console.log(req.body)
+      passport.authenticate('local', function(err, user, info) {
+          if (err) { return  res.status(401).json({'errors':err}); }
+          if (!user) { return res.status(401).json({'errors':'Username not found'}); }
   
     
       req.logIn(user, function(err) {
