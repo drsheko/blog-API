@@ -9,7 +9,7 @@ const PostCard = ({
            <>
 
              <div >
-                <Link to = {`post/${postId}`}>
+                <Link to = {`posts/${postId}`}>
                     <img src="#"></img>
                     <h3>{postTitle}</h3>
                     <p>{postTime}</p>

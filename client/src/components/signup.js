@@ -27,7 +27,7 @@ const Signup =()=>{
             })
             var data = await res.json()
             console.log(data) 
-             navigate('/',{replace:true})
+             navigate('/login',{replace:true})
         }catch(err){
             setError(err)
         }

@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import Posts from './posts';
 
 
 const Home =({user}) => {
@@ -8,10 +9,11 @@ const Home =({user}) => {
             <h1>Home Page</h1>
             {typeof user != "undefined"
                 ? <h2>Hi {user.username}</h2>
-                : <Link to = '/login'>  <h4>Login</h4> </Link>
+                : <Link to = '/signup'>  <h4>Get start</h4> </Link>
             }
             
-            
+            <h1>Posts</h1>
+            <Posts />
         </div>
     )
 }

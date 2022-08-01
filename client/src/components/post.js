@@ -6,6 +6,7 @@ const Post =({posts}) => {
     const [post, setPost] = useState(posts.find((post) => post._id ===id))
     return(
         <>
+            <h1>Item</h1> 
             <h1>{post.title}</h1>
             <img src= {post.title} />
             <p>{post.text}</p>

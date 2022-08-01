@@ -31,7 +31,7 @@ function App() {
           <Route path = '/signup'   element={<Signup />}   />
           <Route path = '/login'    element={<Login getUser={getUser}/>}     />
           <Route path = "/posts"    elemenet = {<Posts getPosts={getPosts} />}  />
-          <Route path = "/posts/:postId"   elemenet = {<Post />}  posts={posts}/>
+          <Route path = "/posts/:postId"   elemenet = {<Post posts={posts}  />}  />
       
       </Routes>
 
