@@ -70,7 +70,7 @@ exports.get_allCommentsOfPost = async(req,res)=>{
         .exec((err,result)=>{
             if(err){ return res.status(401).json({'errors':err})
             }else{
-                return res.json({'success':'success','data':result})
+                return res.json({'data':result})
             }
         })
 }

@@ -1,6 +1,6 @@
 import {useParams} from 'react-router-dom'
 import { useState ,useEffect} from 'react'
-
+import Comments from './comments'
 const Post =() => {
     var id = useParams()
     var postId = id.postid
@@ -29,13 +29,8 @@ const Post =() => {
                         <h1>{post.title}</h1>
                         <p>{post.text }</p>
                         <p>{post.timestamp}</p>
-                        <p>{post.comments[1].text}</p>
-                        <ul>
-                        {post.comments.map((comment) => { 
-                            <li>comments </li>
-                            
-                        })}
-                        </ul>
+                        
+                        <Comments postId = {post._id} />
                     </div>
             
             }
