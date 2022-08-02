@@ -10,7 +10,8 @@ exports.create_comment_post = [
         if(!errors.isEmpty()){
             return res.status(401).json({'errors':errors.errors })
         }
-        const userId = req.user._id;
+
+        const userId = req.body.user;
         const postId = req.params.postid;
         console.log(postId)
         const newComment = new Comment({

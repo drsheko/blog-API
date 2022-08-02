@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
+import CreateComment from './createComment'
+
 const Comments =({postId}) => {
     var id = postId ;
     const [comments, setComments] = useState([]);
+    const [ qty, setQty ] = useState(null)
     const [ isHidden ,setIshidden] = useState(true);
 
     const handleChange = (e) => {
@@ -15,31 +18,34 @@ const Comments =({postId}) => {
                 var res = await fetch(url , {mode : 'cors'})
                 var data = await res.json();
                 setComments(data.data.comments)
-                console.log(data.data.comments)
+                setQty( data.data.comments.length)
             }catch(err){
                 console.log(err)
             }
         }
         fetchComments()
-
+        
     },[])
 
     return(
         <div>
-            <button onClick={handleChange}>comments</button>
+            <button onClick={handleChange}>comments {qty}</button>
             {
                 isHidden !== true
-                ?   comments.length>0
-                    ?   <>
-                        {comments.map(comment =>
-                        <h5>{comment.text}</h5>
-                        )}
-                        </>
-                    
-                    : null 
+                ?   <>
+                        <CreateComment  postId ={id}/>
+                        {
+                            comments.length>0
+                            ?   <>
+                                    {comments.map(comment =>
+                                    <h5>{comment.text}</h5>
+                                    )}
+                                </>
+                            : null   
+                        }
+                    </>  
                 : null     
             }
-  
         </div>
     )
 }

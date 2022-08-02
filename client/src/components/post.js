@@ -22,7 +22,7 @@ const Post =() => {
             },[])
     return(
         <>
-            <h1>Item</h1> 
+            
             { post === null
                 ? <h2>Now loading .....</h2>
                 :   <div>
