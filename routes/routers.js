@@ -17,13 +17,15 @@ router.post('/api/login' , authController.login_post);
 // logout 
 router.get('/api/logout',authController.log_out)
 
-// create Posts 
+// create Post 
 router.post('/api/post',postController.createPost_post)
 // delete Post 
 router.delete('/api/remove-post/:id' , postController.deletePost)
 
 // Get all Posts 
 router.get('/api/posts' , postController.get_all_posts)
+//get one Post 
+router.get('/api/posts/:postid' , postController.get_onePost)
 
 //get Post to update
 router.get('/api/posts/edit-post/:id',postController.Post_edit_get)

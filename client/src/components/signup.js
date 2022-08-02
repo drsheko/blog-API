@@ -12,7 +12,6 @@ const Signup =()=>{
 
     const handleFormSubmit = async(e)=>{
         e.preventDefault();
-        console.log(form);
         try{
             var res = await fetch('http://localhost:3001/api/sign-up',{
                 method:'Post',
@@ -26,7 +25,6 @@ const Signup =()=>{
                 }),
             })
             var data = await res.json()
-            console.log(data) 
              navigate('/login',{replace:true})
         }catch(err){
             setError(err)
@@ -39,7 +37,7 @@ const Signup =()=>{
         var url ="https://pixabay.com/api/?key=27818144-b35666e63fd37e75787508770&q=cars&image_type=photo"
        var res = await fetch("http://localhost:3001/api/posts"  , {mode:'cors'})
         var data = await res.json()
-        console.log(data)
+        
     }
 
     const handleChange =(e)=>{

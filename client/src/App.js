@@ -1,4 +1,4 @@
-import {useState , useEffect} from 'react';
+import {useState , useEffect ,createContext} from 'react';
 import { BrowserRouter , Link, Route ,Routes } from "react-router-dom";
 import './App.css';
 import Home from './components/home';
@@ -6,8 +6,13 @@ import Signup from './components/signup';
 import Login from './components/login';
 import Post from './components/post';
 import Posts from './components/posts';
+import CreatePost from './components/createPost';
+
+
+
+export const UserContext = createContext()
 function App() {
-  const [user , setUser] = useState();
+  const [user , setUser] = useState(null);
   const [posts, setPosts] = useState()
   let num =12
 
@@ -22,17 +27,17 @@ function App() {
   }
   
   return (
-
-    <BrowserRouter>
+    < UserContext.Provider value={user}>
+        <BrowserRouter>
     <div>
      
       <Routes>
-          <Route path = '/'         element={<Home user={user}/>} />
+          <Route exact path = '/'         element={<Home user={user}/>} />
           <Route path = '/signup'   element={<Signup />}   />
           <Route path = '/login'    element={<Login getUser={getUser}/>}     />
-          <Route path = "/posts"    elemenet = {<Posts getPosts={getPosts} />}  />
-          <Route path = "/posts/:postId"   elemenet = {<Post posts={posts}  />}  />
-      
+          <Route exact path = "/posts"    elemenet = {<Posts getPosts={getPosts} />}  />
+          <Route path ='/posts/:postid' element =  { <Post/>} />
+          <Route path = "/posts/create-post" element = { <CreatePost /> } />
       </Routes>
 
       
@@ -43,6 +48,10 @@ function App() {
   
   
   </BrowserRouter>
+    
+    
+    </UserContext.Provider>
+    
   );
 }
 

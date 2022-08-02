@@ -12,8 +12,8 @@ const Posts = ({getPosts}) => {
                 var data = await res.json();
                 console.log(data.posts[0].text)
                  setPosts( await data.posts);
-                console.log(posts)
-                //getPosts(data);
+            
+                
             }
             catch(err){
                 console.log(err)
@@ -29,7 +29,8 @@ const Posts = ({getPosts}) => {
     return(<>
                 {posts ===null
                     ? <h5>Now loading ...........</h5>
-                    : posts.map(post=>
+                    :   
+                        posts.map(post=>
                         
                     
                         <PostCard 

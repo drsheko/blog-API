@@ -12,7 +12,7 @@ const Login =( {getUser})=>{
     const handleFormSubmit = async(e)=>{
        try{
             e.preventDefault();
-            console.log(form);
+            
             var res = await fetch('http://localhost:3001/api/login',{
                 method:'Post',
                 headers:{
@@ -24,10 +24,10 @@ const Login =( {getUser})=>{
                 }),
             })
             var data = await res.json()
-            console.log(data)
+            
             var user = await data.user
             getUser(user) //send user to app
-            navigate(-1)
+            navigate('/' , {replace:true})
        }catch(err){
             setError(err)
        }

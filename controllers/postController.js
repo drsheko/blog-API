@@ -24,7 +24,7 @@ exports.createPost_post = [
             })
         }else{
             const newPost = new Post( {
-                user:req.user._id,
+                user:req.body.user,
                 title:req.body.title,
                 text:req.body.text,
                 isPublished:true
@@ -70,6 +70,12 @@ exports.deletePost = async(req,res)=>{
 exports.get_all_posts = async(req,res)=>{
     var allPosts = await Post.find().sort([['timestamp','descending']]).populate('user').populate('comments');
     res.json({'posts':allPosts})
+}
+
+exports.get_onePost = async(req,res) => {
+    var id = req.params.postid
+    var post = await Post.findById(id).populate('comments');
+    res.json({'post':post})
 }
 
 exports.get_user_posts = async(req,res)=>{
