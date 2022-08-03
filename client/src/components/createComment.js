@@ -1,8 +1,11 @@
-import { useState ,useContext } from "react"
+import { useState ,useContext ,  } from "react"
+import { useNavigate } from "react-router-dom"
 import { UserContext } from "../App"
 
 const CreateComment =  ({postId}) => {
+    let navigate = useNavigate()
     let user =useContext(UserContext)
+    console.log(user.username)
     const [form, setForm ] = useState({
         text:''
     }) 
@@ -14,8 +17,9 @@ const CreateComment =  ({postId}) => {
         })
     }
 
-    const handleFormSubmit = async() => {
+    const handleFormSubmit = async(e) => {
         try{
+           // e.preventDefault()
             var id = postId
             var url = `http://localhost:3001/api/posts/${id}/comments`
             var options = {
@@ -26,12 +30,13 @@ const CreateComment =  ({postId}) => {
                 body: new URLSearchParams({
                     "text": form.text,
                     user: user._id,
-                    
+
 
                 })
                 
             }
-            var res  =await fetch(url , options)
+            var res  =await fetch(url , options);
+            navigate(`/posts/${id}`,{replace:true})
         }
         catch(err){
             console.log(err)

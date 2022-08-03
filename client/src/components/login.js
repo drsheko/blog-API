@@ -27,6 +27,9 @@ const Login =( {getUser})=>{
             
             var user = await data.user
             getUser(user) //send user to app
+
+            // Save logged user to local storage 
+            localStorage.setItem('user' ,JSON.stringify(user) )
             navigate('/' , {replace:true})
        }catch(err){
             setError(err)

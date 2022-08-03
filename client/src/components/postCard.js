@@ -3,7 +3,7 @@ const PostCard = ({
     postId , postTitle , postTime
     }) =>{
     
-        
+            
 
        return (
            <>
