@@ -52,9 +52,7 @@ exports.delete_comment = async(req,res)=>{
     Comment.findByIdAndDelete(id,
         (err)=>{
             if(err){ return res.status(401).json({'errors':err})}
-            else{ return res.json({'success':'Comment has been deleted'})}
-        }
-        
+            return res.json({'success':'Comment has been deleted'})} 
     )
 }
 

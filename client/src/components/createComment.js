@@ -2,7 +2,7 @@ import { useState ,useContext ,  } from "react"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "../App"
 
-const CreateComment =  ({postId}) => {
+const CreateComment =  (props) => {
     let navigate = useNavigate()
     let user =useContext(UserContext)
     console.log(user.username)
@@ -19,8 +19,8 @@ const CreateComment =  ({postId}) => {
 
     const handleFormSubmit = async(e) => {
         try{
-           // e.preventDefault()
-            var id = postId
+            e.preventDefault()
+            var id =props.postId
             var url = `http://localhost:3001/api/posts/${id}/comments`
             var options = {
                 method : 'Post',
@@ -30,13 +30,17 @@ const CreateComment =  ({postId}) => {
                 body: new URLSearchParams({
                     "text": form.text,
                     user: user._id,
-
-
-                })
-                
+                })  
             }
+            
             var res  =await fetch(url , options);
-            navigate(`/posts/${id}`,{replace:true})
+
+            var data = await res.json();
+            var addedComment = data.data
+            setForm({text:''})
+            props.setComments( (prevState) => [ addedComment, ...prevState])
+            props.setQty(prevState => prevState +1)
+
         }
         catch(err){
             console.log(err)
