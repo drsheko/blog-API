@@ -50,7 +50,10 @@ const CreateComment =  (props) => {
         <div>
             <form onSubmit={handleFormSubmit}>
                 <input value={form.text} onChange={handleChange} placeholder="write a comment" />
-                <button type="submit"> comment</button>
+                <button type="submit" 
+                   disabled = {form.text.trim()=='' ?true:false} 
+                    
+                > comment</button>
             </form>
         </div>
     )
