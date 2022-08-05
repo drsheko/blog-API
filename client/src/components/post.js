@@ -10,6 +10,9 @@ const Post =() => {
     const [ post, setPost ] = useState(null)
     const [ isLiked, setIsLiked ] = useState(false)
     const [likesQty, setLikesQty ] = useState(0)
+
+    const [ isDisliked, setIsDisliked ] = useState(false)
+    const [dislikesQty, setDislikesQty ] = useState(0)
     const deletePost = async() => {
         try{
             var url = `http://localhost:3001/api/remove-post/${postId}`
@@ -80,6 +83,54 @@ const Post =() => {
             }
         }
     }
+
+    const handleDislike = async() => {
+        if(!isDisliked){
+            try{
+                var url =  `http://localhost:3001/api/posts/${postId}/dislike`
+                var options = {
+                    method : 'Post',
+                    headers : {
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        "user":user._id,
+                    })
+                }
+
+                var res = await fetch(url,options)
+                setIsDisliked(true)
+                setDislikesQty(dislikesQty +1)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }else{
+            try{
+                var url =  `http://localhost:3001/api/posts/${postId}/undislike`
+                var options = {
+                    method : 'Post',
+                    headers : {
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        "user":user._id,
+                    })
+                }
+
+                var res = await fetch(url,options)
+                setIsDisliked(false)
+                setDislikesQty(dislikesQty -1)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+    }
+
+
+
+
     useEffect(()=>{
         const fetchPost =async()=>{
             try{
@@ -87,7 +138,18 @@ const Post =() => {
                 var data = await res.json()
                 setPost(data.post)
                 setLikesQty(data.post.likes.length)
-                console.log(likesQty)
+                setDislikesQty(data.post.dislikes.length);
+                if(user){
+                    //check if user previously liked the post
+                    var likeRes = await fetch(`http://localhost:3001/api/posts/${postId}/${user._id}/like`)
+                    var likeData = await likeRes.json()
+                    setIsLiked(likeData.liked);
+
+                    //check if user previously disliked the post
+                    var dislikeRes = await fetch(`http://localhost:3001/api/posts/${postId}/${user._id}/dislike`)
+                    var dislikeData = await dislikeRes.json()
+                    setIsDisliked(dislikeData.disliked)
+                }
             }
             catch(err){
                 console.log(err)
@@ -119,9 +181,16 @@ const Post =() => {
                         
                        
                         <button onClick={handleLike} 
-                            disabled={user==null?true:false}
-                            className = {isLiked?'active':'inactive'}
-                            >like</button><span>{likesQty}</span>
+                            disabled={user!=null && isDisliked==false?false:true}
+                                className = {isLiked?'active':'inactive'}
+                            >like
+                        </button><span>{likesQty}</span>
+
+                        <button onClick={handleDislike} 
+                            disabled={user!=null && isLiked==false ?false:true}
+                                className = {isDisliked?'active':'inactive'}
+                            >dislike
+                        </button><span>{dislikesQty}</span>
                         
                         <Comments postId = {post._id} />
                     </div>

@@ -9,7 +9,7 @@ const postSchema = new Schema({
     isPublished:{type:Boolean,default:true},
     picture:{type:String},
     likes : {type:Array , default : []},
-    dislike : { type :Array , default: []},
+    dislikes : { type :Array , default: []},
     timestamp:{type:Date, default:new Date()}
 });
 

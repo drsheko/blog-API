@@ -126,3 +126,57 @@ exports.unlike = async(req,res) => {
     )
 }
 
+exports.dislike = async(req,res) => {
+    var postId = req.params.postid ;
+    var userId = req.body.user ;
+
+    Post.findByIdAndUpdate(
+        postId, {
+            $push : {
+                dislikes : userId
+            }
+        },(err ,post) => {
+            if(err){return res.status(401).json({'error':err})}
+            let dislike = post.dislikes[0]
+            return res.status(200).json({dislike})
+        }  
+    )
+}
+
+exports.undislike = async(req,res) => {
+    var postId = req.params.postid ;
+    var userId = req.body.user ;
+
+    Post.findByIdAndUpdate(
+        postId, {
+            $pull : {
+                dislikes : userId
+            }
+        },(err ,post) => {
+            if(err){return res.status(401).json({'error':err})}
+            return res.status(200).json({"success":'You undisliked the post '})
+        }  
+    )
+}
+
+exports.user_liked_post = async(req,res) => {
+    var postId = req.params.postid ; 
+    var userId = req.params.userid ; 
+    Post.findById(postId,
+        (err,post)=>{
+            if (err){ return res.status(401).json({'error':err})}
+            var liked = post.likes.includes(userId)
+            return res.json({'liked':liked})
+        })
+}
+
+exports.user_disliked_post = async(req,res) => {
+    var postId = req.params.postid ; 
+    var userId = req.params.userid ; 
+    Post.findById(postId,
+        (err,post)=>{
+            if (err){ return res.status(401).json({'error':err})}
+            var disliked = post.dislikes.includes(userId)
+            return res.json({'disliked':disliked})
+        })
+}

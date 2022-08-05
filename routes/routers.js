@@ -41,6 +41,18 @@ router.post('/api/posts/:postid/like', postController.like)
 // unlike post 
 router.post('/api/posts/:postid/unlike', postController.unlike)
 
+// check if user liked the post
+router.get('/api/posts/:postid/:userid/like',postController.user_liked_post)
+
+// dislike post 
+router.post('/api/posts/:postid/dislike', postController.dislike)
+
+// undislike post 
+router.post('/api/posts/:postid/undislike', postController.undislike)
+// check if user disliked the post
+router.get('/api/posts/:postid/:userid/dislike',postController.user_disliked_post)
+
+
 // Create comment
 router.post('/api/posts/:postid/comments' , commentController.create_comment_post)
 
