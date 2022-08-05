@@ -1,5 +1,5 @@
 import {useState , useEffect ,createContext} from 'react';
-import { BrowserRouter , Link, Route ,Routes } from "react-router-dom";
+import { BrowserRouter , Link, Route ,Routes  } from "react-router-dom";
 import './App.css';
 import Home from './components/home';
 import Signup from './components/signup';
@@ -12,8 +12,8 @@ export const UserContext = createContext()
 function App() {
   const [user , setUser] = useState(null);
   const [posts, setPosts] = useState()
-  let num =12
-
+  
+  
   //Set user after login 
   const getUser=(currUser)=>{
       setUser(currUser)
@@ -23,6 +23,8 @@ function App() {
   const getPosts = (allPosts) => {
       setPosts(allPosts)
   }
+
+  
 
   useEffect(()=>{
     const loggedUser = localStorage.getItem('user')
@@ -38,7 +40,7 @@ function App() {
     <div>
      
       <Routes>
-          <Route exact path = '/'         element={<Home user={user}/>} />
+          <Route exact path = '/'         element={<Home user={user} setUser={setUser}/>} />
           <Route path = '/signup'   element={<Signup />}   />
           <Route path = '/login'    element={<Login getUser={getUser}/>}     />
           <Route exact path = "/posts"    elemenet = {<Posts getPosts={getPosts} />}  />
