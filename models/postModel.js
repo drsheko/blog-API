@@ -8,6 +8,8 @@ const postSchema = new Schema({
     comments:[{type:Schema.Types.ObjectId ,ref : 'comment'}],
     isPublished:{type:Boolean,default:true},
     picture:{type:String},
+    likes : {type:Array , default : []},
+    dislike : { type :Array , default: []},
     timestamp:{type:Date, default:new Date()}
 });
 

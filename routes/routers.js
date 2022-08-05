@@ -34,10 +34,17 @@ router.put('/api/posts/post/:id' , postController.Post_edit_post)
 
 //get Posts for certain user
 router.get('/api/user/posts' , postController.get_user_posts)
-  
+ 
+// like post 
+router.post('/api/posts/:postid/like', postController.like)
+
+// unlike post 
+router.post('/api/posts/:postid/unlike', postController.unlike)
 
 // Create comment
 router.post('/api/posts/:postid/comments' , commentController.create_comment_post)
+
+
 
 //Edit comment
 router.put('/api/posts/post/comments/:commentid',commentController.edit_comment)
@@ -47,5 +54,6 @@ router.delete('/api/posts/post/comments/:commentid',commentController.delete_com
 
 // get Post's Comments
 router.get('/api/posts/:postid/comments' ,commentController.get_allCommentsOfPost)
+
 
 module.exports =  router;

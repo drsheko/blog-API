@@ -113,12 +113,18 @@ const Comments =({postId}) => {
             <button onClick={handleChange}>comments {qty}</button>
             {
                 isHidden !== true
-                ?   <>
-                        <CreateComment  
+                ?   <>  
+                        
+                        {
+                            user == null
+                            ?''
+                            : <CreateComment  
                             postId ={id} 
                             setComments ={setComments}
                             setQty = {setQty}
                         />
+                        }
+                               
                         <div hidden={editing?false:true}>
                             <form onSubmit={saveEdit}>
                                 <input value={form.text} onChange={handleFormChange} />

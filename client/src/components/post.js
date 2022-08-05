@@ -8,7 +8,8 @@ const Post =() => {
     var postId = id.postid
     var navigate = useNavigate()
     const [ post, setPost ] = useState(null)
-
+    const [ isLiked, setIsLiked ] = useState(false)
+    const [likesQty, setLikesQty ] = useState(0)
     const deletePost = async() => {
         try{
             var url = `http://localhost:3001/api/remove-post/${postId}`
@@ -34,12 +35,59 @@ const Post =() => {
         }
         navigate(url , {state :formData})
     }
+
+
+    const handleLike = async() => {
+        if(!isLiked){
+            try{
+                var url =  `http://localhost:3001/api/posts/${postId}/like`
+                var options = {
+                    method : 'Post',
+                    headers : {
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        "user":user._id,
+                    })
+                }
+
+                var res = await fetch(url,options)
+                setIsLiked(true)
+                setLikesQty(likesQty +1)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }else{
+            try{
+                var url =  `http://localhost:3001/api/posts/${postId}/unlike`
+                var options = {
+                    method : 'Post',
+                    headers : {
+                        'Content-Type':'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        "user":user._id,
+                    })
+                }
+
+                var res = await fetch(url,options)
+                setIsLiked(false)
+                setLikesQty(likesQty -1)
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+    }
     useEffect(()=>{
         const fetchPost =async()=>{
             try{
                 var res = await fetch(`http://localhost:3001/api/posts/${postId}`  , {mode:'cors'});
                 var data = await res.json()
                 setPost(data.post)
+                setLikesQty(data.post.likes.length)
+                console.log(likesQty)
             }
             catch(err){
                 console.log(err)
@@ -64,13 +112,16 @@ const Post =() => {
                                         <button onClick={handleEdit} >edit</button>
                                     </>
 
-
-
-
                         }
                         <h1>{post.title}</h1>
                         <p>{post.text }</p>
                         <p>{post.timestamp}</p>
+                        
+                       
+                        <button onClick={handleLike} 
+                            disabled={user==null?true:false}
+                            className = {isLiked?'active':'inactive'}
+                            >like</button><span>{likesQty}</span>
                         
                         <Comments postId = {post._id} />
                     </div>

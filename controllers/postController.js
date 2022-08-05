@@ -90,6 +90,39 @@ exports.get_user_posts = async(req,res)=>{
             return post.user !==null
         })
         return  res.json({'posts':posts})
-    });
-    
+    }); 
 }
+
+exports.like = async(req,res) => {
+    var postId = req.params.postid ;
+    var userId = req.body.user ;
+
+    Post.findByIdAndUpdate(
+        postId, {
+            $push : {
+                likes : userId
+            }
+        },(err ,post) => {
+            if(err){return res.status(401).json({'error':err})}
+            let like = post.likes[0]
+            return res.status(200).json({like})
+        }  
+    )
+}
+
+exports.unlike = async(req,res) => {
+    var postId = req.params.postid ;
+    var userId = req.body.user ;
+
+    Post.findByIdAndUpdate(
+        postId, {
+            $pull : {
+                likes : userId
+            }
+        },(err ,post) => {
+            if(err){return res.status(401).json({'error':err})}
+            return res.status(200).json({"success":'You unliked the post '})
+        }  
+    )
+}
+

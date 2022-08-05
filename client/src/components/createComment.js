@@ -5,7 +5,6 @@ import { UserContext } from "../App"
 const CreateComment =  (props) => {
     let navigate = useNavigate()
     let user =useContext(UserContext)
-    console.log(user.username)
     const [form, setForm ] = useState({
         text:''
     }) 
