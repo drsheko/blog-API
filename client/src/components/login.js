@@ -42,6 +42,15 @@ const Login =( {getUser})=>{
             [e.target.name]:e.target.value})
     }
 
+    const togglePassword = () =>{
+        var input = document.getElementById('password')
+        if (input.type === "password") {
+            input.type = "text";
+          } else {
+            input.type = "password";
+          }
+    }
+
     return(
         <div>
             {typeof error != 'undefined'
@@ -52,7 +61,8 @@ const Login =( {getUser})=>{
                 <label>Username</label>
                 <input type="text" name='username' value={form.username} onChange={handleChange} />
                 <label> Password</label>
-                <input  type={"password"} name='password' value={form.password} onChange={handleChange} />
+                <input  type={"password"} name='password' value={form.password} onChange={handleChange} id='password' autocomplete="on" />
+                <input type='checkbox' onClick={togglePassword}/> <span> Show password</span>
                 <button type="submit" value="submit">Log in</button>
             </form>
         </div>
