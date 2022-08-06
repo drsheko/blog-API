@@ -1,6 +1,9 @@
 import {useState , useEffect ,createContext} from 'react';
 import { BrowserRouter , Link, Route ,Routes  } from "react-router-dom";
 import './App.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Home from './components/home';
 import Signup from './components/signup';
 import Login from './components/login';
@@ -8,7 +11,11 @@ import Post from './components/post';
 import Posts from './components/posts';
 import CreatePost from './components/createPost';
 import EditPost from './components/editPost';
+
+
+
 export const UserContext = createContext()
+
 function App() {
   const [user , setUser] = useState(null);
   const [posts, setPosts] = useState()
@@ -31,14 +38,18 @@ function App() {
     if (loggedUser){
       const foundUser = JSON.parse(loggedUser);
       setUser(foundUser)
+      
     }
+    
   },[])
   
   return (
     < UserContext.Provider value={user}>
+
+      <ToastContainer />
         <BrowserRouter>
     <div>
-     
+      
       <Routes>
           <Route exact path = '/'         element={<Home user={user} setUser={setUser}/>} />
           <Route path = '/signup'   element={<Signup />}   />
@@ -60,6 +71,8 @@ function App() {
     
     
     </UserContext.Provider>
+
+    
     
   );
 }

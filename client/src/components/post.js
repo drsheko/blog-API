@@ -2,6 +2,7 @@ import {useParams , useNavigate } from 'react-router-dom'
 import { useState ,useEffect ,useContext} from 'react'
 import Comments from './comments'
 import { UserContext } from '../App'
+import { toast } from 'react-toastify'
 const Post =() => {
     var id = useParams()
     var user = useContext(UserContext)
@@ -57,6 +58,7 @@ const Post =() => {
                 var res = await fetch(url,options)
                 setIsLiked(true)
                 setLikesQty(likesQty +1)
+                toast.success('You liked the post')
             }
             catch(err){
                 console.log(err)
@@ -77,6 +79,7 @@ const Post =() => {
                 var res = await fetch(url,options)
                 setIsLiked(false)
                 setLikesQty(likesQty -1)
+                toast.success('You unliked the post',{autoClose:1000 , position: toast.POSITION.BOTTOM_LEFT})
             }
             catch(err){
                 console.log(err)

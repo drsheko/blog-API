@@ -1,5 +1,6 @@
 import { useState ,useContext ,  } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import { UserContext } from "../App"
 
 const CreateComment =  (props) => {
@@ -39,7 +40,7 @@ const CreateComment =  (props) => {
             setForm({text:''})
             props.setComments( (prevState) => [ addedComment, ...prevState])
             props.setQty(prevState => prevState +1)
-
+            toast.success('Comment has been added' ,{position: toast.POSITION.BOTTOM_RIGHT})
         }
         catch(err){
             console.log(err)

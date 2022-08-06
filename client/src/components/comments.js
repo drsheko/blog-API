@@ -1,6 +1,7 @@
 import { useEffect, useState , useContext } from "react"
 import CreateComment from './createComment'
 import { UserContext } from "../App";
+import { toast } from "react-toastify";
 const Comments =({postId}) => {
     var id = postId ;
     var user = useContext(UserContext)
@@ -63,7 +64,7 @@ const Comments =({postId}) => {
             }
             var res = await fetch(url ,options)
             var data =await res.json()
-            
+            toast.success('Comment has been edited',{position:toast.POSITION.BOTTOM_RIGHT})
         
              var modifiedComments =   comments.map(comment => {
                     if (comment._id === editComment._id){
