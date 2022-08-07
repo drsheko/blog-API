@@ -34,7 +34,6 @@ const CreateComment =  (props) => {
             }
             
             var res  =await fetch(url , options);
-
             var data = await res.json();
             var addedComment = data.data
             setForm({text:''})
@@ -45,8 +44,8 @@ const CreateComment =  (props) => {
         catch(err){
             console.log(err)
         }
-
     }
+
     return(
         <div>
             <form onSubmit={handleFormSubmit}>

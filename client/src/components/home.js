@@ -1,4 +1,5 @@
 import {Link ,useNavigate} from 'react-router-dom'
+import { toast } from 'react-toastify';
 import Posts from './posts';
 
 
@@ -10,6 +11,7 @@ const Home =({user, setUser}) => {
         setUser(null)
         localStorage.clear()
         navigate('/')
+        toast.success('You logged out successfully')
     }
 
     return(

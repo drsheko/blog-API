@@ -35,6 +35,7 @@ const Comments =({postId}) => {
                 comments.filter(comment => comment._id !== commId)
             )
             setQty(qty-1)
+            toast.success('Comment has been deleted')
         }catch(err){
             console.log(err)
         } 
@@ -66,7 +67,7 @@ const Comments =({postId}) => {
             var data =await res.json()
             toast.success('Comment has been edited',{position:toast.POSITION.BOTTOM_RIGHT})
         
-             var modifiedComments =   comments.map(comment => {
+            var modifiedComments =   comments.map(comment => {
                     if (comment._id === editComment._id){
                         comment =  {...comment, text : form.text}
                         console.log(comment)
@@ -74,13 +75,10 @@ const Comments =({postId}) => {
                     }
                     return comment
                 }) 
-                console.log(modifiedComments)
-                setComments(modifiedComments)  
+            setComments(modifiedComments)  
             
             setEditComment(null)
             setEditing(!editing);
-            
-
         }
         catch(err){
             console.log(err)
@@ -108,7 +106,6 @@ const Comments =({postId}) => {
         
     },[])
     
-
     return(
         <div>
             <button onClick={handleChange}>comments {qty}</button>

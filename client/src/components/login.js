@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {useNavigate} from "react-router-dom"
 const Login =( {getUser})=>{
     let navigate = useNavigate()
+    const [errors, setErrors ] = useState()
     const [form , setForm] = useState({
         username:'',
         password:''
     });
-
-    const [error,setError] = useState()
 
     const handleFormSubmit = async(e)=>{
        try{
@@ -24,15 +23,20 @@ const Login =( {getUser})=>{
                 }),
             })
             var data = await res.json()
-            
+            console.log(data)
             var user = await data.user
-            getUser(user) //send user to app
-
-            // Save logged user to local storage 
-            localStorage.setItem('user' ,JSON.stringify(user) )
-            navigate('/' , {replace:true})
+            if ('errors' in data){
+               setErrors(data.errors.error)
+            }else{ console.log('else runs')
+                getUser(user) //send user to app
+                // Save logged user to local storage 
+                localStorage.setItem('user' ,JSON.stringify(user) )
+                navigate('/' , {replace:true})
+            }
+            
        }catch(err){
-            setError(err)
+            //setError(err)
+            console.log(err)
        }
         
     }
@@ -51,17 +55,19 @@ const Login =( {getUser})=>{
           }
     }
 
+    useEffect(()=>{},[errors])
+
     return(
         <div>
-            {typeof error != 'undefined'
-            ? <h3>{error}</h3>
+            {typeof errors != 'undefined'
+            ? <h3>{errors}</h3>
             :<></>
             }
             <form onSubmit={handleFormSubmit} >
                 <label>Username</label>
-                <input type="text" name='username' value={form.username} onChange={handleChange} />
+                <input type="text" name='username' value={form.username} onChange={handleChange} required />
                 <label> Password</label>
-                <input  type={"password"} name='password' value={form.password} onChange={handleChange} id='password' autocomplete="on" />
+                <input  type={"password"} name='password' value={form.password} onChange={handleChange} id='password' autoComplete="on"  required/>
                 <input type='checkbox' onClick={togglePassword}/> <span> Show password</span>
                 <button type="submit" value="submit">Log in</button>
             </form>

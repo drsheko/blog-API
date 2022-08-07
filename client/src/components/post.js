@@ -11,7 +11,6 @@ const Post =() => {
     const [ post, setPost ] = useState(null)
     const [ isLiked, setIsLiked ] = useState(false)
     const [likesQty, setLikesQty ] = useState(0)
-
     const [ isDisliked, setIsDisliked ] = useState(false)
     const [dislikesQty, setDislikesQty ] = useState(0)
     const deletePost = async() => {
@@ -25,6 +24,7 @@ const Post =() => {
             }
             var res = await fetch(url , options)
             navigate('/' , { replace : true});
+            toast.success('The post has been deleted')
         }catch(err){
             console.log(err)
         }
@@ -104,6 +104,7 @@ const Post =() => {
                 var res = await fetch(url,options)
                 setIsDisliked(true)
                 setDislikesQty(dislikesQty +1)
+                toast.success('You disliked the post')
             }
             catch(err){
                 console.log(err)
@@ -124,6 +125,7 @@ const Post =() => {
                 var res = await fetch(url,options)
                 setIsDisliked(false)
                 setDislikesQty(dislikesQty -1)
+                toast.success('You undisliked the post')
             }
             catch(err){
                 console.log(err)
