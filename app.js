@@ -12,7 +12,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('./models/userModel')
 var Routers =require('./routes/routers')
 var bcrypt = require('bcryptjs');
-
+var cors = require('cors')
 
 // mongoDatabase setup
 mongoDB = "mongodb+srv://shady:"+process.env.MONGO_PASSCODE+"@blog.ddhqail.mongodb.net/?retryWrites=true&w=majority";
@@ -60,7 +60,7 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
-
+app.use(cors())
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());

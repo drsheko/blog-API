@@ -5,6 +5,8 @@ const authController = require('../controllers/authController')
 const postController = require('../controllers/postController')
 const commentController =require('../controllers/commentController')
 
+
+
 router.get('/', function(req, res, next) {
     res.render('home');
   });
@@ -66,6 +68,5 @@ router.delete('/api/posts/post/comments/:commentid',commentController.delete_com
 
 // get Post's Comments
 router.get('/api/posts/:postid/comments' ,commentController.get_allCommentsOfPost)
-
 
 module.exports =  router;

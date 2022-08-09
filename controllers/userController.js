@@ -1,10 +1,12 @@
 const User =require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const path = require('path')
 const {body , validationResult} = require('express-validator');
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, path.join(__dirname, '/../public/images'))
+     // cb(null, path.join(__dirname, '/../public/images'))
+      cb(null, path.join(__dirname, '/../client/src/images'))
     },
     filename: function (req, file, cb) {
       cb(null, req.body.username+ file.originalname)
@@ -12,13 +14,15 @@ const storage = multer.diskStorage({
   })
 const upload = multer({storage:storage});
 
+
+
 exports.signup_post = [ 
     upload.single('avatarURL'),
     
     body('username').isString().trim().isLength({min:3}).escape().withMessage('Username should be at least 3 character'),
     body('password').trim().isLength({min:6}).escape().withMessage('Password should be at least 6 character'),
     body('confirmPassword').trim().isLength({min:6}).escape().withMessage('Password confirmation should match your password ')
-    .custom(async(value, { req }) => {
+    .custom(async(value, { req }) => { 
         if (value !== req.body.password) {
             console.log(1)
            throw new Error('Password confirmation does not match password');
