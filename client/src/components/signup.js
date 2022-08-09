@@ -1,6 +1,7 @@
 
 import { useEffect , useState } from "react";
 import {Link ,useNavigate} from 'react-router-dom'
+import { toast } from "react-toastify";
 const Signup =()=>{
     let navigate = useNavigate();
     const [error , setError] = useState()
@@ -9,7 +10,8 @@ const Signup =()=>{
         password:'',
         confirmPassword:''
     });
-
+    const [upload , setUpload] = useState(null)
+    const [isSelected , setIsSelected] = useState(false)
     const handleFormSubmit = async(e)=>{
         e.preventDefault();
         try{
@@ -23,36 +25,44 @@ const Signup =()=>{
                     "password":form.password,
                     "confirmPassword":form.confirmPassword
                 }),
+                file: upload
             })
             var data = await res.json()
-             navigate('/login',{replace:true})
+            if('errors' in data){
+                console.log(data)
+                setError(data.errors)
+                console.log(error)
+
+            }else{
+                navigate('/login',{replace:true})
+                toast.success('Account created')
+            }
+             
         }catch(err){
             setError(err)
-        }
-        
-        
+        }       
     }
-    const getInfo =async(e)=>{
-        e.preventDefault()
-        var url ="https://pixabay.com/api/?key=27818144-b35666e63fd37e75787508770&q=cars&image_type=photo"
-       var res = await fetch("http://localhost:3001/api/posts"  , {mode:'cors'})
-        var data = await res.json()
-        
-    }
+   
 
     const handleChange =(e)=>{
         setForm({...form,
             [e.target.name]:e.target.value})
     }
-
+    const uploadFile = (e) => {
+        var file = e.target.files[0]
+        setUpload(file)
+        setIsSelected(true)
+    }
 
     return(
         <div>
-            <button onClick={getInfo}>Info</button>
+            
             <h1>Sign up</h1>
             <h5>Do you an account?<span><Link to ="/login" >Log in</Link></span></h5>
             { typeof error != 'undefined'
-            ?<h4>{error}</h4>
+            ? error.map(err=>
+                <h4>{err}</h4>
+                )
             :<></>}
             <form onSubmit={handleFormSubmit} >
                 <label>Username</label>
@@ -64,6 +74,12 @@ const Signup =()=>{
                 <label>Confirm Password</label>
                 <input  type={"password"} name='confirmPassword' value={form.confirmPassword} onChange={handleChange} />
 
+                <label>Photo</label>
+                <input type="file" name='avataruRL'  onChange={uploadFile}  />
+                { isSelected 
+                ?<p>{upload.size}</p>
+                :''}
+               
                 <button type="submit" value="submit">Create account</button>
             </form>
         </div>

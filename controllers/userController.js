@@ -12,7 +12,6 @@ const storage = multer.diskStorage({
   })
 const upload = multer({storage:storage});
 
-
 exports.signup_post = [ 
     upload.single('avatarURL'),
     
@@ -27,25 +26,28 @@ exports.signup_post = [
         return true;
       }),
       
-    async(req, res, next) => {console.log(11)
+    async(req, res, next) => {
         var  form={
             username:req.body.username,
             password:req.body.password,
             confirmPassword:req.body.confirmPassword
         }
-        const isUsernameToken = await User.findOne({username:req.body.username})
-        if(isUsernameToken != null){
-            console.log(12)
-              return res.status(401).json({errors: 'Username is aleardy token !!' ,form})
+        var errorsArr = []
+        const isUsernameTaken = await User.findOne({username:req.body.username})
+        if(isUsernameTaken != null){
+           // errorsArr.push('Username is aleardy token !!')
+              return res.status(401).json({errors: ['Username is aleardy token !!'] ,form})
            
         }     
         const errors = validationResult(req);
-        if (!errors.isEmpty()) { console.log(13)
-            
-            return res.status(401).json({errors:errors.errors  , form})
-          
+        if (!errors.isEmpty()) {
+           
+            var errorsMsg = errors.errors.map(err=>err.msg)  
+            console.log(errorsMsg) 
+            errorsArr.push(errorsMsg)
+            return res.status(401).json({errors:errorsMsg  , form}) 
         }
-        try{ console.log(14)
+        try{ console.log(req.file)
             var uploaded_Url 
             bcrypt.hash(req.body.password, 10, ( err, hash ) => {
                 if (err) { console.log(err) ;
@@ -60,12 +62,10 @@ exports.signup_post = [
                        avatarURL: uploaded_Url,
                        
                    }).save( err => {
-                       if (err) { 
-                        
+                       if (err) {  
                            next(err)
                        }
-                       res.json({'success':' Account has created successfully'})
-                       
+                       res.json({'success':' Account has created successfully'})    
                    })
                 }
            })

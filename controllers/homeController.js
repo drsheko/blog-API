@@ -10,9 +10,6 @@ exports.home_get = async(req,res)=>{
     res.json(data)
 }
 
-
-exports.login_post = 
-passport.authenticate('local'), (req, res) => { }
 exports.log_out =  (req, res) => {
     req.logout(function (err) {
       if (err) {
