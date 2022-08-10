@@ -1,50 +1,44 @@
-.App {
-  text-align: center;
+html{
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+body{
+  margin: 0;
+  padding:0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+a:link{
+  text-decoration: none;
+  
+}
+button{
+  color:blueviolet;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#customNav{
+  background-color: rgba(46, 57, 212, 0.726);
+  opacity:2;
+padding: 20px;}
+.customBtn{
+ background-color:lightgray;
+ border-radius: 5%;
+ text-decoration: none;
+ color:gray;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.contentContainer{
+  box-sizing: border-box;
+  max-width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap:0px;
 }
+.homeTextContainer{
 
-.App-link {
-  color: #61dafb;
+  background-color: rgb(203, 222, 241);
+  padding:  5% !important; 
+
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.active{
-  background-color: rgba(9, 86, 228, 0.863);
-  color:white;
-  padding:15px;
-}
-
-.inactive{
-  background-color:rgba(156, 12, 12, 0.082);
-  color:black;
-  padding:15px;
+.homePhotoContainer{
 }

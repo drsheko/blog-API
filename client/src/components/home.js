@@ -16,15 +16,29 @@ const Home =({user, setUser}) => {
 
     return(
         <div>
-            <h1>Home Page</h1>
-            { user != null
-                ?   <>
-                        <h2>Hi {user.username}</h2>
-                        <Link to = '/posts/create-post'> Create a new post</Link>
-                        <button onClick={logout}>Logout</button>
-                    </> 
-                :  <Link to = '/signup'>  <h4>Get start</h4> </Link>
-            }
+
+     
+            <div class='contentContainer row g-0'>
+                <div className=' col-4 homeTextContainer'>
+                    <p>its nice to have website ..where you can express your feelings and share your knowledge tp the world!!</p>
+                    <div className='text-center'>
+                        { user != null
+                            ?   <>
+                                    <h2>Hi {user.username}</h2>
+                                    <Link to = '/posts/create-post'> Create a new post</Link>
+                                    <button onClick={logout}>Logout</button>
+                                </> 
+                            :   <button>
+                                    <Link to = '/signup'>  Get start </Link>
+                                </button>
+                                    
+                        }
+                    </div>
+                </div>
+                <div className=' col-8 ' >
+                    <img  src={require('../images/blog.webp')}/>
+                </div>
+            </div>
             
             <h1>Posts</h1>
             <Posts />
