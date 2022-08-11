@@ -40,5 +40,29 @@ padding: 20px;}
   padding:  5% !important; 
 
 }
-.homePhotoContainer{
+.cardsContainer{
+  padding: 3% !important;
+}
+.post{
+  padding: 0 5%;
+  background-color: rgb(216, 216, 216);
+  min-height: 100vh;
+}
+.customPost{
+  position: relative;
+  min-height: 100vh;
+  padding: 2% ;
+}
+.commentsContainer{
+  border-top: 1px solid gray;
+  padding: 2% 0%;
+}
+.dotBtn{
+  
+  
+}
+.likeBtn , .dislikeBtn{
+  border-radius: 50% !important;
+  margin: 2% 1%;
+
 }

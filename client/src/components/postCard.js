@@ -6,19 +6,16 @@ const PostCard = ({
             
 
        return (
-           <>
-
-             <div >
-                <Link to = {`/posts/${postId}`} >
-                    <img src="#"></img>
-                    <h3>{postTitle}</h3>
-                    <p>{postTime}</p>
-                </Link>
-
-               
-             </div>
-            
-           </>
+           <div className='col'>
+            <div className="card" style={{'width':'18rem'}} >
+                <img src={require("../images/blog.webp")} class="card-img-top" alt="image"/>
+                <div className="card-body">
+                    <h5 className="card-title">{postTitle}</h5>
+                    <p className="card-text">{postTime}</p>
+                    <a href={`/posts/${postId}`} class="btn btn-primary">Read more</a>
+                </div>
+            </div>  
+           </div>
        ) 
 }
 

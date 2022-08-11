@@ -48,33 +48,20 @@ function App() {
     < UserContext.Provider value={user}>
       <Header />
       <ToastContainer />
-        <BrowserRouter>
-    <div>
-      
-      <Routes>
-          <Route exact path = '/'         element={<Home user={user} setUser={setUser}/>} />
-          <Route path = '/signup'   element={<Signup />}   />
-          <Route path = '/login'    element={<Login getUser={getUser}/>}     />
-          <Route exact path = "/posts"    elemenet = {<Posts getPosts={getPosts} />}  />
-          <Route path ='/posts/:postid' element =  { <Post/>} />
-          <Route path = "/posts/create-post" element = { <CreatePost /> } />
-          <Route path = "/posts/:postid/edit" element = { <EditPost /> } />
-      </Routes>
-
-      
-      
-    </div>
-  
-  
-  
-  
-  </BrowserRouter>
-    
-    
+      <BrowserRouter>
+          <Routes>
+              <Route exact path = '/'         element={<Home user={user} setUser={setUser}/>} />
+              <Route path = '/signup'   element={<Signup />}   />
+              <Route path = '/login'    element={<Login getUser={getUser}/>}     />
+              <Route exact path = "/posts"    elemenet = {<Posts getPosts={getPosts} />}  />
+              <Route path ='/posts/:postid' element =  { <Post user={user}/>} />
+              <Route path = "/posts/create-post" element = { <CreatePost /> } />
+              <Route path = "/posts/:postid/edit" element = { <EditPost /> } />
+          </Routes>
+      </BrowserRouter>
+   
     </UserContext.Provider>
-
-    
-    
+ 
   );
 }
 

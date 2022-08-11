@@ -3,9 +3,10 @@ import { useState ,useEffect ,useContext} from 'react'
 import Comments from './comments'
 import { UserContext } from '../App'
 import { toast } from 'react-toastify'
-const Post =() => {
+const Post =({user}) => {
     var id = useParams()
-    var user = useContext(UserContext)
+   // var user = props.user
+    //var user = useContext(UserContext)
     var postId = id.postid
     var navigate = useNavigate()
     const [ post, setPost ] = useState(null)
@@ -40,10 +41,9 @@ const Post =() => {
         navigate(url , {state :formData})
     }
 
-
     const handleLike = async() => {
         if(!isLiked){
-            try{
+            try{console.log(user.username +'liked')
                 var url =  `http://localhost:3001/api/posts/${postId}/like`
                 var options = {
                     method : 'Post',
@@ -133,9 +133,6 @@ const Post =() => {
         }
     }
 
-
-
-
     useEffect(()=>{
         const fetchPost =async()=>{
             try{
@@ -143,66 +140,90 @@ const Post =() => {
                 var data = await res.json()
                 setPost(data.post)
                 setLikesQty(data.post.likes.length)
-                setDislikesQty(data.post.dislikes.length);
-                if(user){
-                    //check if user previously liked the post
-                    var likeRes = await fetch(`http://localhost:3001/api/posts/${postId}/${user._id}/like`)
-                    var likeData = await likeRes.json()
-                    setIsLiked(likeData.liked);
-
-                    //check if user previously disliked the post
-                    var dislikeRes = await fetch(`http://localhost:3001/api/posts/${postId}/${user._id}/dislike`)
-                    var dislikeData = await dislikeRes.json()
-                    setIsDisliked(dislikeData.disliked)
-                }
+                setDislikesQty(data.post.dislikes.length);   
             }
             catch(err){
                 console.log(err)
             }
         }
         fetchPost()
-
             },[])
+
+    useEffect(()=>{
+        const checkForLikeOrDislike =async()=>{
+            if(user){ 
+                //check if user previously liked the post
+                var likeRes = await fetch(`http://localhost:3001/api/posts/${postId}/${user._id}/like`)
+                var likeData = await likeRes.json()
+                setIsLiked(likeData.liked);
+                    console.log(likeData)
+                //check if user previously disliked the post
+                var dislikeRes = await fetch(`http://localhost:3001/api/posts/${postId}/${user._id}/dislike`)
+                var dislikeData = await dislikeRes.json()
+                setIsDisliked(dislikeData.disliked)
+            }   
+        }
+        checkForLikeOrDislike()
+    },[user])
+     
     return(
-        <>
+        <div className='post'>
             
             { post === null
                 ? <h2>Now loading .....</h2>
-                :   <div>
-                        {
-                           user == null
-                           ? ""
-                           : user._id != post.user
-                                ? ''
-                                :   <>
-                                        <button onClick={deletePost}>del</button>
-                                        <button onClick={handleEdit} >edit</button>
-                                    </>
+                :   <div >
+                      
+                        <div className='card customPost'>
+                            {
+                                user == null? ""
+                                : user._id != post.user? ''
+                                        : <div className="btn-group dropstart dotBtn">
+                                            <button type="button"  data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i className="bi bi-three-dots-vertical"></i>
+                                            </button>
+                                            <ul className="dropdown-menu">
+                                                <li><button className="dropdown-item"  onClick={deletePost}>del</button></li>
+                                                <li><button className="dropdown-item" onClick={handleEdit} >Edit</button></li>
+                                            </ul>
+                                        </div>
+                            }
+                            <div className="card-body">
+                                <h3 className="card-title text-center">{post.title}</h3>
+                                <p className="card-text"><small className="text-muted">{post.timestamp}</small></p>
+                            </div>
+                            <img src={require('../images/fastfood.jpg')} className="card-img-bottom" alt="..."></img>
+                            <h4 className='card-text'>{post.text }</h4>
+                            
+                            <div>
+                                <button onClick={handleLike} 
+                                    disabled={user!=null && isDisliked==false?false:true}
+                                        className = {isLiked?'btn btn-primary likeBtn':'btn btn-outline-primary likeBtn'}>
+                                            <i className="bi bi-hand-thumbs-up-fill"></i>
+                                            {likesQty}
+                                </button>
 
-                        }
-                        <h1>{post.title}</h1>
-                        <p>{post.text }</p>
-                        <p>{post.timestamp}</p>
+                                <button onClick={handleDislike} 
+                                    disabled={user!=null && isLiked==false ?false:true}
+                                        className = {isDisliked?'btn btn-primary likeBtn':'btn btn-outline-primary likeBtn'}>
+                                            <i className="bi bi-hand-thumbs-down-fill"></i>
+                                            {dislikesQty}
+                                </button>
+                            </div>
+                            <div className='commentsContainer'>
+                                 <Comments postId = {post._id} />
+                            </div>
+                        </div>
+                        
                         
                        
-                        <button onClick={handleLike} 
-                            disabled={user!=null && isDisliked==false?false:true}
-                                className = {isLiked?'active':'inactive'}
-                            >like
-                        </button><span>{likesQty}</span>
-
-                        <button onClick={handleDislike} 
-                            disabled={user!=null && isLiked==false ?false:true}
-                                className = {isDisliked?'active':'inactive'}
-                            >dislike
-                        </button><span>{dislikesQty}</span>
+          
                         
-                        <Comments postId = {post._id} />
+                        
                     </div>
             
             }
 
-        </>
+        </div>
     )
 }
 

@@ -18,7 +18,7 @@ const Home =({user, setUser}) => {
         <div>
 
      
-            <div class='contentContainer row g-0'>
+            <div className='contentContainer row g-0'>
                 <div className=' col-4 homeTextContainer'>
                     <p>its nice to have website ..where you can express your feelings and share your knowledge tp the world!!</p>
                     <div className='text-center'>
@@ -39,8 +39,7 @@ const Home =({user, setUser}) => {
                     <img  src={require('../images/blog.webp')}/>
                 </div>
             </div>
-            
-            <h1>Posts</h1>
+
             <Posts />
         </div>
     )
