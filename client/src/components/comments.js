@@ -108,19 +108,20 @@ const Comments =({postId}) => {
     
     return(
         <div>
-            <button onClick={handleChange}>comments {qty}</button>
+            <button className="btn btn-outline-primary" onClick={handleChange}>Comments 
+                 <span>   {qty} </span>
+            </button>
             {
                 isHidden !== true
-                ?   <>  
-                        
+                ?   <>   
                         {
                             user == null
                             ?''
-                            : <CreateComment  
-                            postId ={id} 
-                            setComments ={setComments}
-                            setQty = {setQty}
-                        />
+                            :   <CreateComment  
+                                    postId ={id} 
+                                    setComments ={setComments}
+                                    setQty = {setQty}
+                                />
                         }
                                
                         <div hidden={editing?false:true}>

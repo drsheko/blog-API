@@ -48,6 +48,9 @@ const CreateComment =  (props) => {
 
     return(
         <div>
+            <div>
+                <img src={require('../images/drsheko2244444445messi.jpeg')} />
+            </div>
             <form onSubmit={handleFormSubmit}>
                 <input value={form.text} onChange={handleChange} placeholder="write a comment" />
                 <button type="submit" 
