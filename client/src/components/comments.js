@@ -14,6 +14,7 @@ const Comments =({postId}) => {
 
     const handleChange = (e) => {
         setIshidden(!isHidden)
+        console.log(user)
     }
 
     const handleFormChange = (e) => {
@@ -34,7 +35,8 @@ const Comments =({postId}) => {
             setComments(
                 comments.filter(comment => comment._id !== commId)
             )
-            setQty(qty-1)
+            setQty(qty-1);
+            setEditing(false)
             toast.success('Comment has been deleted')
         }catch(err){
             console.log(err)
@@ -88,6 +90,7 @@ const Comments =({postId}) => {
     const handleCancel = (e) => {
         e.preventDefault()
         setEditing(false)
+        setEditComment(null)
     }
     useEffect(()=>{
         const fetchComments = async() =>{
@@ -124,26 +127,46 @@ const Comments =({postId}) => {
                                 />
                         }
                                
-                        <div hidden={editing?false:true}>
-                            <form onSubmit={saveEdit}>
-                                <input value={form.text} onChange={handleFormChange} />
-                                <button onClick={handleCancel}>cancel</button>
-                                <button type="submit">Save</button>
-                            </form>
-                        </div>
+                        
                         {
                             comments.length>0
                             ?   <>
                                     {comments.map(comment =>
                                         <>
-                                            <h5 hidden={editComment && comment._id ==editComment._id?true:false} >{comment.text}</h5>
-                                            {user!= null&& comment.user ==user._id
-                                                ?   <>
-                                                        <button onClick={()=>{handleEdit(comment._id)}}>e</button>
-                                                        <button onClick={()=>{deleteComment(comment._id)}}>d</button>
-                                                    </>     
-                                                :null
-                                            }
+                                            <div className="comment-containe row my-1">
+                                                
+                                                    <img className="rounded-circle col-2 align-self-start" src={require(`../images/${comment.user.avatarURL}`)}/>
+                                                
+                                                <div className="card comment-card p-3 col-10">
+                                                    <div className="row m-0 p-0">
+                                                        <div className='col-10'>
+                                                            <p className="fw-bold text-info fs-3 mb-0" >{comment.user.username}</p>
+                                                            <p className="text-muted fs-6 mt-0 p-0" >{comment.timestamp}</p>
+                                                        </div>
+                                                        
+                                                        {user!= null&& comment.user._id ==user._id
+                                                            ?   <div className="row col-2 p-0 m-0">
+                                                                    <i className=" bi bi-pencil-square  col-6" hidden={editing?true:false} onClick={()=>{handleEdit(comment._id)}}></i>
+                                                                    <i className="bi bi-trash col-6"onClick={()=>{deleteComment(comment._id)}} ></i>
+                                                                </div>     
+                                                            :null
+                                                        }
+                                                    </div>
+                                                    
+                                                    
+                                                    <p className="fs-4 text-wrap"hidden={editComment && comment._id ==editComment._id?true:false}  >{comment.text}</p>
+                                                    <div hidden={editing&&comment._id ==editComment._id?false:true}>
+                                                        <form onSubmit={saveEdit}>
+                                                            <input value={form.text} onChange={handleFormChange} />
+                                                            <button onClick={handleCancel}>cancel</button>
+                                                            <button type="submit">Save</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            
                                         </>
                                        
                                     )}

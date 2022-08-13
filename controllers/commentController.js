@@ -64,7 +64,10 @@ exports.get_allCommentsOfPost = async(req,res)=>{
         .populate({
             path:'comments',
             // sorting based on property of populated field(path)
-            options:{sort:{'timestamp':-1}}
+            options:{
+                sort:{'timestamp':-1},
+                populate:'user'
+            }
         })
         .exec((err,result)=>{
             if(err){ return res.status(401).json({'errors':err})

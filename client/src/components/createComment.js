@@ -47,13 +47,13 @@ const CreateComment =  (props) => {
     }
 
     return(
-        <div>
-            <div>
-                <img src={require('../images/drsheko2244444445messi.jpeg')} />
-            </div>
+        <div className="comment-new">
+            
+            <img className="rounded-circle" src={require('../images/drsheko2244444445messi.jpeg')} />
+            
             <form onSubmit={handleFormSubmit}>
-                <input value={form.text} onChange={handleChange} placeholder="write a comment" />
-                <button type="submit" 
+                <input value={form.text}  onChange={handleChange} placeholder="write a comment" />
+                <button type="submit"  className='btn btn-outline-primary commentBtn btn-sm ms-2'
                    disabled = {form.text.trim()=='' ?true:false} 
                     
                 > comment</button>
