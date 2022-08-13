@@ -51,9 +51,9 @@ const CreateComment =  (props) => {
             
             <img className="rounded-circle" src={require('../images/drsheko2244444445messi.jpeg')} />
             
-            <form onSubmit={handleFormSubmit}>
-                <input value={form.text}  onChange={handleChange} placeholder="write a comment" />
-                <button type="submit"  className='btn btn-outline-primary commentBtn btn-sm ms-2'
+            <form onSubmit={handleFormSubmit} className="row ms-2">
+                <textarea className="col-8" value={form.text}   onChange={handleChange} placeholder="write a comment" />
+                <button type="submit"  className='btn btn-outline-primary btn-sm ms-2 col-3 text-nowrap align-self-center'
                    disabled = {form.text.trim()=='' ?true:false} 
                     
                 > comment</button>

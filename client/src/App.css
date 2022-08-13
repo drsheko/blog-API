@@ -80,9 +80,7 @@ padding: 20px;}
 .rounded-circle{
   width:50px;
 }
-.commentBtn{
-  
-}
+
 .comment-container{
   display: flex;
   flex-direction: row;

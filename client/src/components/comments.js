@@ -157,9 +157,9 @@ const Comments =({postId}) => {
                                                     <p className="fs-4 text-wrap"hidden={editComment && comment._id ==editComment._id?true:false}  >{comment.text}</p>
                                                     <div hidden={editing&&comment._id ==editComment._id?false:true}>
                                                         <form onSubmit={saveEdit}>
-                                                            <input value={form.text} onChange={handleFormChange} />
-                                                            <button onClick={handleCancel}>cancel</button>
-                                                            <button type="submit">Save</button>
+                                                            <textarea value={form.text} onChange={handleFormChange} />
+                                                            <button className="btn " onClick={handleCancel}>cancel</button>
+                                                            <button type="submit" className="btn btn-sm bi bi-sd-card-fill">Save</button>
                                                         </form>
                                                     </div>
                                                 </div>
