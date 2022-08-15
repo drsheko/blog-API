@@ -68,20 +68,20 @@ const Signup =()=>{
                 <h4>{err}</h4>
                 )
             :<></>}
-            <form onSubmit={handleFormSubmit}  >
+            <form className='card m-5 p-3' onSubmit={handleFormSubmit}  >
                 <img src={image ?image : require('../images/unkownUserDefault.webp')} height= '100' width={100} />
 
-                <label>Username</label>
-                <input type="text" name='username' value={form.username} onChange={handleChange} />
+                <label className="form-label">Username</label>
+                <input type="text" className="form-control" name='username' value={form.username} onChange={handleChange} />
 
-                <label> Password</label>
-                <input  type={"password"} name='password' value={form.password} onChange={handleChange} />
+                <label className="form-label"> Password</label>
+                <input  type={"password"} className="form-control" name='password' value={form.password} onChange={handleChange} />
 
-                <label>Confirm Password</label>
-                <input  type={"password"} name='confirmPassword' value={form.confirmPassword} onChange={handleChange} />
+                <label className="form-label">Confirm Password</label>
+                <input  type={"password"} className="form-control" name='confirmPassword' value={form.confirmPassword} onChange={handleChange} />
 
-                <label>Photo</label>
-                <input type="file" name='avatarURL'   onChange={uploadFile}  />
+                <label className="form-label">Photo</label>
+                <input type="file" class="form-control" name='avatarURL'   onChange={uploadFile}  />
                 
                 
                
