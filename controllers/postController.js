@@ -21,7 +21,7 @@ exports.createPost_post = [
     upload.single('postPhoto'),
     body('title').trim().isLength({min:1}).escape().withMessage('Post title should not be empty'),
     body('text').trim().isLength({min:1}).escape().withMessage('Post text can not be empty'),
-    async(req,res)=>{console.log(req.body)
+    async(req,res)=>{
         const errors = validationResult(req)
         var postData = {
             title:req.body.title,

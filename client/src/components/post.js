@@ -191,7 +191,7 @@ const Post =({user}) => {
                                 <h3 className="card-title text-center">{post.title}</h3>
                                 <p className="card-text"><small className="text-muted">{post.timestamp}</small></p>
                             </div>
-                            <img src={require('../images/fastfood.jpg')} className="card-img-bottom" alt="..."></img>
+                            <img src={require(`../images/${post.picture}`)} className="card-img-bottom" alt="..."></img>
                             <h4 className='card-text'>{post.text }</h4>
                             
                             <div>

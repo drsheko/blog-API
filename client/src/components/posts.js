@@ -30,6 +30,7 @@ const Posts = ({getPosts}) => {
                                         postTime = {post.timestamp}
                                         postId = {post._id}
                                         postTitle = {post.title}
+                                        postPicture = {post.picture}
                                 
                                     />
                                 )      
