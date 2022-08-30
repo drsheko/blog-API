@@ -26,7 +26,9 @@ exports.create_comment_post = [
                     comments :savedComment._id
                 }
             })
-            return res.json({'success':'Comment has benn created','data':savedComment})
+
+            var addedComment = await Comment.findById(savedComment._id).populate('user')
+            return res.json({'success':'Comment has benn created','data':addedComment})
         })
     }
 ]

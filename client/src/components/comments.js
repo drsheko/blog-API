@@ -111,7 +111,7 @@ const Comments =({postId}) => {
     
     return(
         <div>
-            <button className="btn btn-outline-primary" onClick={handleChange}>Comments 
+            <button className="btn btn-outline-primary my-2" onClick={handleChange}>Comments 
                  <span>   {qty} </span>
             </button>
             {
@@ -122,7 +122,9 @@ const Comments =({postId}) => {
                             ?''
                             :   <CreateComment  
                                     postId ={id} 
+                                    comments=  {comments}
                                     setComments ={setComments}
+                                    qty = {qty}
                                     setQty = {setQty}
                                 />
                         }
@@ -133,14 +135,16 @@ const Comments =({postId}) => {
                             ?   <>
                                     {comments.map(comment =>
                                         <>
-                                            <div className="comment-containe row my-1">
+                                            <div className="container">
+                                           
+                                            <div className=" row  my-1 p-1 ">
                                                 
-                                                    <img className="rounded-circle col-2 align-self-start" src={require(`../images/${comment.user.avatarURL}`)}/>
+                                            <img className="avatar  col-2  me-2  " src={require(`../images/${comment.user.avatarURL}`)}/>
                                                 
-                                                <div className="card comment-card p-3 col-10">
+                                                <div className="card comment-card p-3 col-9">
                                                     <div className="row m-0 p-0">
-                                                        <div className='col-10'>
-                                                            <p className="fw-bold text-info fs-3 mb-0" >{comment.user.username}</p>
+                                                        <div className='col-10'>   
+                                                            <p className="fw-bold text-info fs-3 mb-0 col-9" >{comment.user.username}</p>
                                                             <p className="text-muted fs-6 mt-0 p-0" >{comment.timestamp}</p>
                                                         </div>
                                                         
@@ -154,19 +158,19 @@ const Comments =({postId}) => {
                                                     </div>
                                                     
                                                     
-                                                    <p className="fs-4 text-wrap"hidden={editComment && comment._id ==editComment._id?true:false}  >{comment.text}</p>
+                                                    <p className="fs-4 text-wrap ps-2"hidden={editComment && comment._id ==editComment._id?true:false}  >{comment.text}</p>
                                                     <div hidden={editing&&comment._id ==editComment._id?false:true}>
                                                         <form onSubmit={saveEdit}>
-                                                            <textarea className="shadow-lg rounded" value={form.text} onChange={handleFormChange} />
-                                                            <button className="btn " onClick={handleCancel}>cancel</button>
-                                                            <button type="submit" className="btn btn-sm bi bi-sd-card-fill">Save</button>
+                                                            <textarea className="shadow-lg rounded col-12 p-1" value={form.text} onChange={handleFormChange} />
+                                                            <button className="btn btn-sm btn-dark me-1" onClick={handleCancel}>cancel</button>
+                                                            <button type="submit" className="btn btn-sm  btn-dark bi bi-sd-card-fill">Save</button>
                                                         </form>
                                                     </div>
                                                 </div>
                                                 
                                             </div>
                                             
-                                            
+                                            </div>
                                         </>
                                        
                                     )}
@@ -177,6 +181,7 @@ const Comments =({postId}) => {
                 : null     
             }
         </div>
+        
     )
 }
 export default Comments;

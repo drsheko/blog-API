@@ -1,6 +1,20 @@
 
-
-const Header = () => {
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify'
+import { UserContext } from "../App";
+const Header = ({setUser}) => {
+    let navigate =useNavigate()
+    
+    var user = useContext(UserContext)
+    useEffect(()=>{setUser(user)}, [user])
+    // logout 
+    const logout = () => {
+        setUser(null)
+        localStorage.clear()
+        navigate('/')
+        toast.success('You logged out successfully')
+    }
     return(
         <>
             <nav className="navbar sticky-top navbar-light bg-light">
@@ -12,7 +26,10 @@ const Header = () => {
                         <button className="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
                     </div>
                     <div>
-                        <button className='bi bi-person-circle customBtn' ><a href="/login">Sign in</a></button>
+                        {user===null
+                        ?<button className='bi bi-person-circle customBtn' ><a href="/login">Sign in</a></button>
+                        :<button onClick={logout}>Logout</button>}
+                        
                     </div>
                 </div>
             </nav>

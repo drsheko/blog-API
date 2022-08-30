@@ -10,7 +10,7 @@ const CreateComment =  (props) => {
         text:''
     }) 
 
-    const handleChange = (e) => {
+    const handleChange = (e) => { console.log(user)
         setForm({
             ...form,
             text: e.target.value
@@ -37,9 +37,11 @@ const CreateComment =  (props) => {
             var data = await res.json();
             var addedComment = data.data
             setForm({text:''})
-            props.setComments( (prevState) => [ addedComment, ...prevState])
-            props.setQty(prevState => prevState +1)
+            props.setComments( (prevState) => [ addedComment, ...props.comments])
+            props.setQty( props.qty +1)
             toast.success('Comment has been added' ,{position: toast.POSITION.BOTTOM_RIGHT})
+            console.log('comments here', props.comments)
+            console.log('add' , addedComment)
         }
         catch(err){
             console.log(err)
@@ -47,16 +49,18 @@ const CreateComment =  (props) => {
     }
 
     return(
-        <div className="comment-new">
+        <div className="comment-new  mx-2">
             
-            <img className="rounded-circle" src={require('../images/drsheko2244444445messi.jpeg')} />
+            <img className="avatar col-2 " src={require(`../images/${user.avatarURL}`)} />
             
-            <form onSubmit={handleFormSubmit} className="row ms-2">
-                <textarea className="col-8" value={form.text}   onChange={handleChange} placeholder="write a comment" />
-                <button type="submit"  className='btn btn-outline-primary btn-sm ms-2 col-3 text-nowrap align-self-center'
-                   disabled = {form.text.trim()=='' ?true:false} 
+            <form onSubmit={handleFormSubmit} className="row ms-2 col-8">
+                <div className="pa">
+                <textarea className="col-12 p-2" value={form.text}   onChange={handleChange} placeholder="write a comment . . ." />
+                <button type="submit"  className=' btn btn-outline-primary btn-sm ms-2  p-1 text-nowrap align-self-center'
+                   hidden = {form.text.trim() =='' ?true:false} 
                     
                 > comment</button>
+                </div>
             </form>
         </div>
     )

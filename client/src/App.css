@@ -48,7 +48,6 @@ padding: 20px;}
   padding: 3% !important;
 }
 .post{
-  padding: 0 5%;
   background-color: rgb(216, 216, 216);
   min-height: 100vh;
 }
@@ -75,18 +74,20 @@ padding: 20px;}
   display :flex;
   flex-direction: row;
   justify-content:left ;
-  gap: 5px;
+  gap: 1em;
 }
+
 .rounded-circle{
   width:50px;
 }
 
-.comment-container{
-  display: flex;
-  flex-direction: row;
-  gap:2px;
-
+.avatar{
+  width: 5em !important;
+  height: 5em !important;
+  vertical-align: middle;
+  border-radius: 50%;
+  object-fit: fill;
 }
 .comment-card{
-  
+  background-color: #e2e8f0 !important;
 }

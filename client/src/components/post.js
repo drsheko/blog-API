@@ -213,16 +213,8 @@ const Post =({user}) => {
                                  <Comments postId = {post._id} />
                             </div>
                         </div>
-                        
-                        
-                       
-          
-                        
-                        
                     </div>
-            
             }
-
         </div>
     )
 }

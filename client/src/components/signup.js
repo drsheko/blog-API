@@ -59,33 +59,40 @@ const Signup =()=>{
     }
   
     return(
-        <div>
-            
-            <h1>Sign up</h1>
-            <h5>Do you an account?<span><Link to ="/login" >Log in</Link></span></h5>
-            { typeof error != 'undefined'
-            ? error.map(err=>
-                <h4>{err}</h4>
-                )
-            :<></>}
-            <form className='card m-5 p-3' onSubmit={handleFormSubmit}  >
-                <img src={image ?image : require('../images/unkownUserDefault.webp')} height= '100' width={100} />
+        <div className="card  m-5 ">
+            <div className="card-header">
+                <h1 className=" text-center">Sign up</h1>
+                <h5 className="text-center text-muted ">Do you have an account?<span><Link to ="/login" >Log in</Link></span></h5>
+            </div>
+
+            <form className='card m-5 py-2 px-5' onSubmit={handleFormSubmit}  >
+                <div className="text-center col-12">
+                    <img src={image ?image : require('../images/unkownUserDefault.webp')}  className="rounded float-end " height= '100' width={100} />
+                </div>
+               
 
                 <label className="form-label">Username</label>
-                <input type="text" className="form-control" name='username' value={form.username} onChange={handleChange} />
+                <input type="text" className="form-control" name='username' value={form.username} onChange={handleChange} require />
 
                 <label className="form-label"> Password</label>
-                <input  type={"password"} className="form-control" name='password' value={form.password} onChange={handleChange} />
+                <input  type={"password"} className="form-control" name='password' value={form.password} onChange={handleChange} require/>
 
                 <label className="form-label">Confirm Password</label>
-                <input  type={"password"} className="form-control" name='confirmPassword' value={form.confirmPassword} onChange={handleChange} />
+                <input  type={"password"} className="form-control" name='confirmPassword' value={form.confirmPassword} onChange={handleChange} require/>
 
                 <label className="form-label">Photo</label>
                 <input type="file" class="form-control" name='avatarURL'   onChange={uploadFile}  />
                 
+                { typeof error != 'undefined'
+                    ? error.map(err=>
+                        <h4 className="text-danger h5 my-2">- {err}</h4>
+                        )
+                    :<></>
+                }
+               <div className="col-12">
+                     <button type="submit" value="submit" className="btn btn-primary   text-center my-4">Create account</button>
+               </div>
                 
-               
-                <button type="submit" value="submit">Create account</button>
             </form>
         </div>
     )

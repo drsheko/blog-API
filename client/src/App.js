@@ -46,9 +46,9 @@ function App() {
   
   return (
     < UserContext.Provider value={user}>
-      <Header />
+      <Header setUser={setUser} />
       <ToastContainer />
-      <BrowserRouter>
+      
           <Routes>
               <Route exact path = '/'         element={<Home user={user} setUser={setUser}/>} />
               <Route path = '/signup'   element={<Signup />}   />
@@ -57,8 +57,8 @@ function App() {
               <Route path ='/posts/:postid' element =  { <Post user={user}/>} />
               <Route path = "/posts/create-post" element = { <CreatePost /> } />
               <Route path = "/posts/:postid/edit" element = { <EditPost /> } />
+              <Route path ='/header'   element={ <Header/>} />
           </Routes>
-      </BrowserRouter>
    
     </UserContext.Provider>
  
