@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom'
 const PostCard = ({
-    postId , postTitle , postTime
+    postId , postTitle , postTime, postPicture
     }) =>{
     
             
@@ -8,7 +8,7 @@ const PostCard = ({
        return (
            <div className='col'>
             <div className="card" style={{'width':'18rem'}} >
-                <img src={require("../images/blog.webp")} class="card-img-top" alt="image"/>
+                <img src={require(`../images/${postPicture}`)} class="card-img-top" alt="image"/>
                 <div className="card-body">
                     <h5 className="card-title">{postTitle}</h5>
                     <p className="card-text">{postTime}</p>

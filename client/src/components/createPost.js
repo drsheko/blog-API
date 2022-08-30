@@ -24,7 +24,7 @@ const CreatePost = () => {
     const uploadPhoto = async(e)=> { 
         var file = e.target.files[0]
         setUpload(file)
-        console.log(upload)
+
     }
     const handleFormSubmit = async(e) => {
         e.preventDefault();
@@ -52,17 +52,18 @@ const CreatePost = () => {
 
     return (
         <>
-            <form onSubmit={handleFormSubmit}>
-                <label>title:</label>
-                <input value={form.title} name = 'title' onChange={handleChange} />
+            <form onSubmit={handleFormSubmit} className="border shadow-lg border-2 rounded m-5 p-5">
+                <h2 className="card-header h3"> Create a blog</h2>
+                <label className="form-label mt-2">title:</label>
+                <input value={form.title} className="form-control" name ='title' onChange={handleChange} required />
 
-                <label>text:</label>
-                <input value={form.text} name = 'text' onChange={handleChange} />
+                <label className="form-label mt-2">text:</label>
+                <textarea value={form.text} className="form-control" name = 'text' onChange={handleChange} required />
                 
-                <label className="form-label">Photo</label>
+                <label className="form-label mt-2">Photo</label>
                 <input type="file" class="form-control" name='postPhoto'   onChange={uploadPhoto}  />
 
-                <button type="submit" value="submit">Confirm</button>
+                <button type="submit" className="btn  btn-primary my-2" value="submit">Confirm</button>
             </form>
         
         </>
