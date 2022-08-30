@@ -7,7 +7,7 @@ const postSchema = new Schema({
     text:{type:String, minLength:1 , required:true},
     comments:[{type:Schema.Types.ObjectId ,ref : 'comment'}],
     isPublished:{type:Boolean,default:true},
-    picture:{type:String},
+    picture:{type:String, default : 'blog.webp'},
     likes : {type:Array , default : []},
     dislikes : { type :Array , default: []},
     timestamp:{type:Date, default:new Date()}

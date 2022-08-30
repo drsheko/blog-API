@@ -6,12 +6,22 @@ const bcrypt = require('bcryptjs');
 const {body , validationResult} = require('express-validator');
 const path = require('path');
 const flash =require('connect-flash');
-
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+         cb(null, path.join(__dirname, '/../client/src/images'))
+    },
+    filename: function (req, file, cb) {
+      cb(null, 'Post'+req.body.username+ file.originalname)
+    }
+  })
+  const upload = multer({storage:storage});
 
 exports.createPost_post = [
+    upload.single('postPhoto'),
     body('title').trim().isLength({min:1}).escape().withMessage('Post title should not be empty'),
     body('text').trim().isLength({min:1}).escape().withMessage('Post text can not be empty'),
-    async(req,res)=>{
+    async(req,res)=>{console.log(req.body)
         const errors = validationResult(req)
         var postData = {
             title:req.body.title,
@@ -23,10 +33,15 @@ exports.createPost_post = [
                 'postData':postData
             })
         }else{
+            var uploaded_photo;
+            if(req.file){
+                uploaded_photo = req.file.filename
+            }
             const newPost = new Post( {
                 user:req.body.user,
                 title:req.body.title,
                 text:req.body.text,
+                picture:uploaded_photo,
                 isPublished:true
             }).save(err=>{
                 if(err){return res.json({'errors':err})}

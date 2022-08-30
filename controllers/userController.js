@@ -51,7 +51,7 @@ exports.signup_post = [
             errorsArr.push(errorsMsg)
             return res.status(401).json({errors:errorsMsg  , form}) 
         }
-        try{ console.log(req.file)
+        try{ 
             var uploaded_Url 
             bcrypt.hash(req.body.password, 10, ( err, hash ) => {
                 if (err) { console.log(err) ;
