@@ -62,7 +62,7 @@ const Signup =()=>{
         <div className="card  m-5 ">
             <div className="card-header">
                 <h1 className=" text-center">Sign up</h1>
-                <h5 className="text-center text-muted ">Do you have an account?<span><Link to ="/login" >Log in</Link></span></h5>
+                <h5 className="text-center text-muted h6">Do you have an account?<span><Link to ="/login" >Log in</Link></span></h5>
             </div>
 
             <form className='card m-5 py-2 px-5' onSubmit={handleFormSubmit}  >
@@ -70,7 +70,6 @@ const Signup =()=>{
                     <img src={image ?image : require('../images/unkownUserDefault.webp')}  className="rounded float-end " height= '100' width={100} />
                 </div>
                
-
                 <label className="form-label">Username</label>
                 <input type="text" className="form-control" name='username' value={form.username} onChange={handleChange} require />
 
@@ -85,13 +84,11 @@ const Signup =()=>{
                 
                 { typeof error != 'undefined'
                     ? error.map(err=>
-                        <h4 className="text-danger h5 my-2">- {err}</h4>
+                        <h4 className="text-danger h6 my-2">- {err}</h4>
                         )
                     :<></>
                 }
-               <div className="col-12">
-                     <button type="submit" value="submit" className="btn btn-primary   text-center my-4">Create account</button>
-               </div>
+                     <button type="submit" value="submit" className="btn btn-primary col-6 col-md-3 text-center my-4"><span className="fw-bold  ">Sign up</span></button>
                 
             </form>
         </div>

@@ -56,7 +56,7 @@ const CreateComment =  (props) => {
             <form onSubmit={handleFormSubmit} className="row ms-2 col-8">
                 <div className="pa">
                 <textarea className="col-12 p-2" value={form.text}   onChange={handleChange} placeholder="write a comment . . ." />
-                <button type="submit"  className=' btn btn-outline-primary btn-sm ms-2  p-1 text-nowrap align-self-center'
+                <button type="submit"  className=' btn btn-primary  rounded-pill float-end btn-sm ms-2  p-1 text-nowrap align-self-center'
                    hidden = {form.text.trim() =='' ?true:false} 
                     
                 > comment</button>

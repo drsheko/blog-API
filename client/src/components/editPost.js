@@ -46,14 +46,15 @@ const EditPost = () => {
 
     return (
         <>
-            <form onSubmit={handleFormSubmit}>
-                <label>title:</label>
-                <input value={form.title} name = 'title' onChange={handleChange} />
+            <form onSubmit={handleFormSubmit} className="border shadow-lg border-2 rounded m-5 p-5">
+                <h2 className="card-header h3">Update a blog</h2>
+                <label className="form-label mt-2">title:</label>
+                <input value={form.title} className="form-control"  name = 'title' onChange={handleChange} />
 
-                <label>text:</label>
-                <input value={form.text} name = 'text' onChange={handleChange} />
+                <label  className="form-label mt-2">text:</label>
+                <textarea value={form.text} className="form-control" name='text' onChange={handleChange} />
             
-                <button type="submit" value="submit">Update</button>
+                <button type="submit"  className="btn  btn-primary mt-3 rounded-pill" value="submit">Update</button>
             </form>   
         </>
     )

@@ -23,9 +23,10 @@ const Posts = ({getPosts}) => {
     return(<>
                 {posts ===null
                     ? <h5>Now loading ...........</h5>
-                    :   <div className="row row-cols-1 row-cols-md-3 g-4 cardsContainer">
+                    :   <div className="row p-4 m-auto ">
                             {
                                 posts.map(post=>
+                                    <div className="col-lg-4 col-md-6 col-sm-12  my-3">
                                     <PostCard 
                                         postTime = {post.timestamp}
                                         postId = {post._id}
@@ -33,6 +34,7 @@ const Posts = ({getPosts}) => {
                                         postPicture = {post.picture}
                                 
                                     />
+                                    </div>
                                 )      
                             }
                         </div>  

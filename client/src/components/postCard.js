@@ -7,7 +7,7 @@ const PostCard = ({
 
        return (
            <div className='col'>
-            <div className="card" style={{'width':'18rem'}} >
+            <div className="card "  >
                 <img src={require(`../images/${postPicture}`)} class="card-img-top" alt="image"/>
                 <div className="card-body">
                     <h5 className="card-title">{postTitle}</h5>

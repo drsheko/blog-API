@@ -27,16 +27,11 @@ const Header = ({setUser}) => {
                     </div>
                     <div>
                         {user===null
-                        ?<button className='bi bi-person-circle customBtn' ><a href="/login">Sign in</a></button>
-                        :<button onClick={logout}>Logout</button>}
-                        
+                        ?<i className='bi bi-person-circle  btn' ><a href="/login">Sign in</a></i>
+                        :<i className='bi bi-person-circle  btn' onClick={logout}> <span className="text-primary"> Logout</span></i>}    
                     </div>
                 </div>
             </nav>
-      
-    
-        
-    
         </>
     )
 }

@@ -3,6 +3,7 @@ import { useState ,useEffect ,useContext} from 'react'
 import Comments from './comments'
 import { UserContext } from '../App'
 import { toast } from 'react-toastify'
+import moment from 'moment' ;
 const Post =({user}) => {
     var id = useParams()
    // var user = props.user
@@ -25,11 +26,10 @@ const Post =({user}) => {
             }
             var res = await fetch(url , options)
             navigate('/' , { replace : true});
-            toast.success('The post has been deleted')
+            toast.info('The post has been deleted')
         }catch(err){
             console.log(err)
-        }
-        
+        }      
     }
 
     const handleEdit = () =>{
@@ -58,7 +58,7 @@ const Post =({user}) => {
                 var res = await fetch(url,options)
                 setIsLiked(true)
                 setLikesQty(likesQty +1)
-                toast.success('You liked the post')
+                toast.info('You liked the post')
             }
             catch(err){
                 console.log(err)
@@ -79,7 +79,7 @@ const Post =({user}) => {
                 var res = await fetch(url,options)
                 setIsLiked(false)
                 setLikesQty(likesQty -1)
-                toast.success('You unliked the post',{autoClose:1000 , position: toast.POSITION.BOTTOM_LEFT})
+                toast.info('You unliked the post')
             }
             catch(err){
                 console.log(err)
@@ -104,7 +104,7 @@ const Post =({user}) => {
                 var res = await fetch(url,options)
                 setIsDisliked(true)
                 setDislikesQty(dislikesQty +1)
-                toast.success('You disliked the post')
+                toast.info('You disliked the post')
             }
             catch(err){
                 console.log(err)
@@ -125,7 +125,7 @@ const Post =({user}) => {
                 var res = await fetch(url,options)
                 setIsDisliked(false)
                 setDislikesQty(dislikesQty -1)
-                toast.success('You undisliked the post')
+                toast.info('You undisliked the post')
             }
             catch(err){
                 console.log(err)
@@ -140,7 +140,7 @@ const Post =({user}) => {
                 var data = await res.json()
                 setPost(data.post)
                 setLikesQty(data.post.likes.length)
-                setDislikesQty(data.post.dislikes.length);   
+                setDislikesQty(data.post.dislikes.length); 
             }
             catch(err){
                 console.log(err)
@@ -150,13 +150,12 @@ const Post =({user}) => {
             },[])
 
     useEffect(()=>{
-        const checkForLikeOrDislike =async()=>{
+        const checkForLikeOrDislike =async()=>{ 
             if(user){ 
                 //check if user previously liked the post
                 var likeRes = await fetch(`http://localhost:3001/api/posts/${postId}/${user._id}/like`)
                 var likeData = await likeRes.json()
                 setIsLiked(likeData.liked);
-                    console.log(likeData)
                 //check if user previously disliked the post
                 var dislikeRes = await fetch(`http://localhost:3001/api/posts/${postId}/${user._id}/dislike`)
                 var dislikeData = await dislikeRes.json()
@@ -177,34 +176,33 @@ const Post =({user}) => {
                             {
                                 user == null? ""
                                 : user._id != post.user? ''
-                                        : <div className="btn-group dropstart dotBtn">
-                                            <button type="button"  data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i className="bi bi-three-dots-vertical"></i>
-                                            </button>
-                                            <ul className="dropdown-menu">
-                                                <li><button className="dropdown-item"  onClick={deletePost}>del</button></li>
-                                                <li><button className="dropdown-item" onClick={handleEdit} >Edit</button></li>
+                                    :   <div className="btn-group dropstart position-absolute top-3 end-0 me-5">
+                                            
+                                            <i className="bi bi-list btn " type="button"  data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                            <ul className="dropdown-menu shadow-lg">
+                                                <li><button className="dropdown-item"  onClick={deletePost}><i class="bi bi-trash-fill"></i> Delete</button></li>
+                                                <li><button className="dropdown-item" onClick={handleEdit} > <i class="bi bi-pencil-fill"></i> Edit</button></li>
                                             </ul>
                                         </div>
                             }
                             <div className="card-body">
                                 <h3 className="card-title text-center">{post.title}</h3>
-                                <p className="card-text"><small className="text-muted">{post.timestamp}</small></p>
+                                <p className="card-text"><small className="text-muted">{moment(post.timestamp).format('MMMM Do YYYY, h:mm a')}</small></p>
                             </div>
                             <img src={require(`../images/${post.picture}`)} className="card-img-bottom" alt="..."></img>
-                            <h4 className='card-text'>{post.text }</h4>
+                            <h4 className='card-text mt-3 py-2 border-top '>{post.text }</h4>
                             
-                            <div>
+                            <div className='border-bottom mb-2'> 
                                 <button onClick={handleLike} 
                                     disabled={user!=null && isDisliked==false?false:true}
-                                        className = {isLiked?'btn btn-primary likeBtn':'btn btn-outline-primary likeBtn'}>
-                                            <i className="bi bi-hand-thumbs-up-fill"></i>
+                                        className = {isLiked?'btn btn-primary likeBtn ':'btn btn-outline-primary likeBtn'}>
+                                            <i className="bi bi-hand-thumbs-up-fill "></i>
                                             {likesQty}
                                 </button>
 
                                 <button onClick={handleDislike} 
                                     disabled={user!=null && isLiked==false ?false:true}
-                                        className = {isDisliked?'btn btn-primary likeBtn':'btn btn-outline-primary likeBtn'}>
+                                        className = {isDisliked?'btn btn-primary dislikeBtn':'btn btn-outline-primary dislikeBtn'}>
                                             <i className="bi bi-hand-thumbs-down-fill"></i>
                                             {dislikesQty}
                                 </button>

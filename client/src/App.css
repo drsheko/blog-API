@@ -24,12 +24,7 @@ button{
   background-color: rgba(46, 57, 212, 0.726);
   opacity:2;
 padding: 20px;}
-.customBtn{
- background-color:lightgray;
- border-radius: 5%;
- text-decoration: none;
- color:gray;
-}
+
 .contentContainer{
   box-sizing: border-box;
   max-width: 100%;
@@ -56,17 +51,14 @@ padding: 20px;}
   min-height: 100vh;
   padding: 4% ;
 }
-.commentsContainer{
-  border-top: 1px solid gray;
-  padding: 2% 0%;
-}
-.dotBtn{
-  
-  
+
+.cover{
+  object-fit:fill;
+  height: 100%;
 }
 .likeBtn , .dislikeBtn{
   border-radius: 50% !important;
-  margin: 2% 1%;
+  margin: 1% 1%;
 
 }
 .comment-new{

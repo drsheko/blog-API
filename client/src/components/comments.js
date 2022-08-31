@@ -2,6 +2,7 @@ import { useEffect, useState , useContext } from "react"
 import CreateComment from './createComment'
 import { UserContext } from "../App";
 import { toast } from "react-toastify";
+import moment from 'moment' ;
 const Comments =({postId}) => {
     var id = postId ;
     var user = useContext(UserContext)
@@ -111,7 +112,7 @@ const Comments =({postId}) => {
     
     return(
         <div>
-            <button className="btn btn-outline-primary my-2" onClick={handleChange}>Comments 
+            <button className="btn btn-primary rounded-pill my-2" onClick={handleChange}>Comments 
                  <span>   {qty} </span>
             </button>
             {
@@ -127,25 +128,21 @@ const Comments =({postId}) => {
                                     qty = {qty}
                                     setQty = {setQty}
                                 />
-                        }
-                               
-                        
+                        }             
                         {
                             comments.length>0
                             ?   <>
                                     {comments.map(comment =>
                                         <>
                                             <div className="container">
-                                           
-                                            <div className=" row  my-1 p-1 ">
-                                                
+                                            <div className=" row  my-1 p-1 ">  
                                             <img className="avatar  col-2  me-2  " src={require(`../images/${comment.user.avatarURL}`)}/>
                                                 
                                                 <div className="card comment-card p-3 col-9">
                                                     <div className="row m-0 p-0">
                                                         <div className='col-10'>   
                                                             <p className="fw-bold text-info fs-3 mb-0 col-9" >{comment.user.username}</p>
-                                                            <p className="text-muted fs-6 mt-0 p-0" >{comment.timestamp}</p>
+                                                            <p className="text-muted fs-6 mt-0 p-0" >{moment(comment.timestamp).format('MMMM Do YYYY, h:mm a')}</p>
                                                         </div>
                                                         
                                                         {user!= null&& comment.user._id ==user._id
@@ -155,9 +152,7 @@ const Comments =({postId}) => {
                                                                 </div>     
                                                             :null
                                                         }
-                                                    </div>
-                                                    
-                                                    
+                                                    </div>                                              
                                                     <p className="fs-4 text-wrap ps-2"hidden={editComment && comment._id ==editComment._id?true:false}  >{comment.text}</p>
                                                     <div hidden={editing&&comment._id ==editComment._id?false:true}>
                                                         <form onSubmit={saveEdit}>
@@ -166,10 +161,8 @@ const Comments =({postId}) => {
                                                             <button type="submit" className="btn btn-sm  btn-dark bi bi-sd-card-fill">Save</button>
                                                         </form>
                                                     </div>
-                                                </div>
-                                                
-                                            </div>
-                                            
+                                                </div>                                               
+                                            </div>                                           
                                             </div>
                                         </>
                                        
